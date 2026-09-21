@@ -1,0 +1,9 @@
+requests>=2.31
+tqdm>=4.66
+pandas>=2.0
+
+# Phase 2 (ASR scaffolding) - not required for Phase 1, install only when running Phase 2 scripts
+# ffmpeg-python>=0.2
+# faster-whisper>=1.0
+# silero-vad
+# gradio>=4.0

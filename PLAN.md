@@ -1,6 +1,10 @@
 # PLAN.md — Arabic → Multilingual Religious-Domain Translation & ASR Data Pipeline
 
-Status: **DRAFT — awaiting your approval before any code is written or bulk data is downloaded.**
+Status: **Phase 1a (Quran + Hadith, GitHub-reachable sources) executed after
+your approval** — see `reports/data_report.md` for results. HadeethEnc,
+Tanzil (license wording only), OPUS, and IslamHouse are still blocked from
+this sandbox's network and were not built against (Phase 1b, see Section 2).
+Phase 2 (ASR) is scaffolding only, not run.
 
 ## 0. Important constraint discovered during verification
 
@@ -175,10 +179,42 @@ which is blocked.
   `make clean`, `make split`, `make report`), so any phase can be re-run
   independently.
 
-## 6. Questions for you before I proceed
-1. Which option from Section 0 do you want (1/2/3/4)?
-2. For quran-api editions with clear individual copyright (Abdel Haleem, Saheeh
-   International, etc.) — exclude by default, or include with a
-   `needs_approval` license tag and let you decide per-translation later?
-3. OK to proceed with Quran + Hadith (Phase 1a) now while HadeethEnc/OPUS/IslamHouse
-   verification happens separately, so you have a working pipeline sooner?
+## 6. Decisions you made, and what happened as a result
+
+You chose: proceed with Phase 1a now (Quran + Hadith from the verified
+GitHub sources), treat HadeethEnc/OPUS/IslamHouse as a later pass; and
+exclude individually-copyrighted Quran translations by default, keeping
+only editions attributed to a government/waqf body.
+
+Result of running `make phase1`:
+- 190,642 cleaned Arabic→{en,fr,id,ur,tr} pairs across Quran + Hadith
+  (`data/processed/cleaned.jsonl`), split 90/5/5 by `ref` with zero leakage
+  between splits (verified directly).
+- **Real bug caught during this run and fixed**: the wrong-script filter
+  (meant to catch Arabic text leaking into a Latin-script target field) was
+  initially applied to Urdu too. Urdu is written in Perso-Arabic script and
+  shares Unicode block U+0600-06FF with Arabic, so it was misfiring and
+  dropping nearly all ~33k Urdu candidate pairs -- exactly your top-priority
+  language. Fixed in `src/clean.py` (skip the Arabic-script heuristic for
+  `tgt_lang == "ur"`); Urdu now keeps 33,218 hadith pairs (Quran domain still
+  has 0 Urdu pairs -- see next point).
+- Applying "government/waqf body only" to Quran left **zero Quran-domain
+  pairs for French and Urdu** (no fr/ur edition in fawazahmed0/quran-api is
+  attributed to such a body). Hadith still covers both. Full candidate list
+  with authors is in `sources.csv`; tell me if you want to approve a specific
+  translator (e.g. Fateh Muhammad Jalandhry for Urdu, whose translator died
+  in 1941, is a common candidate for public-domain-by-age, though I have not
+  independently confirmed that status).
+- See `reports/data_report.md` for the full pairs/words table, drop reasons,
+  and 50-sample-per-source/language CSVs under `reports/samples/`.
+- `data/raw/` and `data/processed/*.jsonl` total ~2GB and are gitignored
+  (regenerate with `make phase1`); only code, `PLAN.md`, `sources.csv`,
+  `README.md`, and the small `reports/` outputs are committed.
+
+## 7. Still open
+1. Section 0's options (1/2/3/4) for HadeethEnc/Tanzil/OPUS/IslamHouse --
+   which one do you want for the next pass?
+2. Approve a specific fr/ur Quran translator to close that gap, or leave it?
+3. GitHub push for this session is currently blocked (Claude's GitHub App
+   isn't installed/authorized on this repo) -- work is committed locally,
+   needs that resolved to land on the branch.

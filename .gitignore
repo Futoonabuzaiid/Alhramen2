@@ -1,0 +1,14 @@
+# Generated data -- reproducible via `make phase1`, too large for git.
+data/raw/fawazahmed0_quran/
+data/raw/fawazahmed0_hadith/
+data/processed/*.jsonl
+data/processed/*.json
+
+# Logs are regenerated on every run
+logs/*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
