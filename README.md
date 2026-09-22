@@ -10,12 +10,18 @@ was made under (source approval policy, network constraints).
 
 ## Status
 
-Phase 1 (Quran + Hadith translation pairs) is built and run. HadeethEnc,
-Tanzil (used only for license wording, text itself is covered via
-`fawazahmed0/quran-api`), OPUS, and IslamHouse are **not yet included** --
-they were unreachable from this development sandbox's network and need to
-be verified from an unrestricted network before any downloader is written
-for them. See `sources.csv` for exact status per source.
+Phase 1 (Quran + Hadith translation pairs, now including HadeethEnc's
+hadith text + sharh/hints) is built and run. Tanzil is used only for
+license wording (its text is covered via `fawazahmed0/quran-api`). OPUS's
+Tanzil corpus was downloaded and inspected but is **deliberately excluded**
+from the training pipeline (its Arabic column is Tafsir al-Jalalayn
+commentary, not Quran verse text, and its license is non-commercial-only
+-- see PLAN.md section 8.2). King Fahd Complex and IslamHouse were
+verified reachable but **not scraped** -- KFC's translation pages are
+JavaScript-rendered with no static content to check terms against, and
+IslamHouse's book/audio content is PDF/mp3-only with no confirmed
+content-reuse license. See `sources.csv` and `PLAN.md` section 8 for exact
+status per source.
 
 Phase 2 (ASR) is scaffolding only -- `src/audio_prep.py`, `src/transcribe.py`,
 `src/review_tool.py` exist but have not been run and require separate
@@ -41,10 +47,14 @@ One JSON object per line in every `data/processed/*.jsonl` file:
 
 ```json
 {"id": "...", "source": "...", "domain": "quran|hadith|sharh|khutba|general",
- "ref": "quran:2:255 or hadith:bukhari:1", "ar_diacritized": "...",
+ "ref": "quran:2:255 or hadith:bukhari:1 or hadeethenc:10842", "ar_diacritized": "...",
  "ar": "...", "ar_normalized": "...", "lang": "ar",
  "tgt": "...", "tgt_lang": "en|fr|id|ur|tr", "license": "...",
- "quran_quote_refs": ["quran:..."]  // only present when detected}
+ "quran_quote_refs": ["quran:..."],  // only present when detected
+ "explanation": "...", "explanation_ar": "...",  // hadeethenc only, when present
+ "hints": ["..."], "hints_ar": ["..."],           // hadeethenc only, when present
+ "grade": "...", "grade_ar": "...",               // hadeethenc only, when present
+ "attribution": "...", "attribution_ar": "..."}    // hadeethenc only, when present
 ```
 
 - `ar_diacritized`: original Arabic text, untouched.
@@ -59,7 +69,10 @@ One JSON object per line in every `data/processed/*.jsonl` file:
 ```bash
 pip install -r requirements.txt
 
-make download-phase1   # or: make download-quran / make download-hadith
+# On a machine where `python3` isn't on PATH (e.g. Windows with the `py`
+# launcher), override the interpreter: make PYTHON=py <target>
+
+make download-phase1   # download-quran + download-hadith + download-hadeethenc + download-opus
 make clean              # writes data/processed/cleaned.jsonl + dropped.jsonl
 make split               # writes data/processed/{train,valid,test}*.jsonl
 make report               # writes reports/data_report.md + reports/samples/*.csv
@@ -67,6 +80,10 @@ make report               # writes reports/data_report.md + reports/samples/*.cs
 # or all at once:
 make phase1
 ```
+
+`download-opus` caches and inspects OPUS's Tanzil corpus but does **not**
+feed it into `clean.py` -- see `src/download_opus.py`'s docstring and
+PLAN.md section 8.2.
 
 Every download step is resumable: it caches raw JSON under `data/raw/` and
 skips re-fetching files already on disk. Delete a specific cached file to
@@ -84,14 +101,27 @@ in `requirements.txt`.
 
 ## License policy applied in this build
 
-- Quran: only editions attributed to a government/waqf body (King Fahd
-  Complex, Indonesian Ministry of Religious Affairs, Turkey's Diyanet) are
-  included in `cleaned.jsonl`, per an explicit decision to exclude
-  individually-copyrighted translations by default. This currently leaves
-  **no Quran-domain pairs for French or Urdu** -- see
-  `reports/data_report.md` "Known gaps".
+- Quran: editions attributed to a government/waqf body (King Fahd Complex,
+  Indonesian Ministry of Religious Affairs, Turkey's Diyanet) are included
+  by default, plus explicit user-approved exceptions: Urdu's Muhammad Taqi
+  Usmani translation, and French's Muhammad Hamidullah translation
+  (both individually-authored; approved after reviewing the full candidate
+  list -- see PLAN.md sections 8.7-8.8). **Hamidullah's edition carries a
+  non-commercial-only restriction** (tanzil.net's own Terms of Use,
+  checked live before approval) -- the exact restriction text is carried
+  in every one of its pairs' `license` field. All 5 target languages now
+  have Quran-domain coverage.
 - Hadith: all available translations are included, each pair's `license`
   field records the named translator so this can be revisited; see
   `sources.csv` and `PLAN.md` for the reasoning.
 - Everything sourced from `fawazahmed0/quran-api` and `fawazahmed0/hadith-api`
   (Unlicense / public domain for the aggregator's compilation).
+- HadeethEnc: attribution-required (not a ban on ML training or
+  redistribution as such), and its `robots.txt` explicitly publishes
+  `Content-Signal: ai-train=yes` -- included in `cleaned.jsonl`. Every pair
+  carries `license`/`attribution` fields so the required credit isn't lost
+  downstream. See PLAN.md section 8.1.
+- OPUS's Tanzil corpus is downloaded (`make download-opus`) but **not**
+  included in `cleaned.jsonl` -- its Arabic column is tafsir commentary,
+  not Quran verse text, and its license is non-commercial-only. See
+  PLAN.md section 8.2.

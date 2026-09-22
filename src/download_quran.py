@@ -25,13 +25,36 @@ ARABIC_EDITIONS = {
 
 # Editions whose 'author'/'source' clearly identifies a government or waqf
 # body (per user decision: exclude individually-authored translations by
-# default even though the repo's Unlicense covers the compilation itself).
+# default even though the repo's Unlicense covers the compilation itself),
+# plus individually-approved exceptions the user has explicitly signed off
+# on after reviewing the candidate list in sources.csv/PLAN.md.
 APPROVED_EDITION_KEYS = {
     "eng_muhammadtaqiudd",  # Hilali-Khan, published/distributed by King Fahd Complex (Saudi govt)
     "ind_indonesianislam",  # Indonesian Ministry of Religious Affairs
     "ind_kingfahdcomplex",  # King Fahd Complex (Saudi govt)
     "tur_diyanetisleri",  # Diyanet Isleri (Turkey's Presidency of Religious Affairs, govt)
     "tur_diyanetvakfi",  # Diyanet Vakfi (Diyanet Foundation)
+    "urd_muhammadtaqiusm",  # Muhammad Taqi Usmani -- individually-authored, explicitly approved by user (PLAN.md section 8.7).
+                            # License status UNCONFIRMED: aggregator has no 'source' URL for this edition, and no
+                            # citable public terms/license statement was found for it (see PLAN.md section 8.7).
+    "fra_muhammadhamidul",  # Muhammad Hamidullah -- individually-authored, explicitly approved by user (PLAN.md section 8.8); non-commercial-only, see LICENSE_NOTES below
+}
+
+# Extra per-edition license text for approved-by-exception editions whose
+# terms carry a restriction beyond the default gov/waqf-body assumption
+# (verified live against the edition's own `source`, not guessed). Merged
+# into the pair's `license` field in clean.py.
+LICENSE_NOTES = {
+    "fra_muhammadhamidul": (
+        "Tanzil.net Terms of Use (https://tanzil.net/trans/, verified live): "
+        "'The translations provided at this page are for non-commercial "
+        "purposes only. If used otherwise, you need to obtain necessary "
+        "permission from the translator or the publisher.' COMPLIANT: "
+        "project's confirmed license basis (PLAN.md 'Project license "
+        "basis', 2026-09-22) is non-commercial research/educational use, "
+        "no revenue, no commercial deployment -- satisfies this "
+        "restriction. Re-check if project scope ever becomes commercial."
+    ),
 }
 
 
@@ -85,6 +108,7 @@ def main():
             "source": info.get("source", ""),
             "verses": len(data["quran"]),
             "approved": key in APPROVED_EDITION_KEYS,
+            "license_note": LICENSE_NOTES.get(key, ""),
         }
 
     RAW_DIR.mkdir(parents=True, exist_ok=True)
