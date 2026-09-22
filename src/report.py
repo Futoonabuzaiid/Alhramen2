@@ -93,9 +93,12 @@ def main():
                   "English. Its /quran-dev/ developer platform has real download links, but only for "
                   "Arabic text/commentary, not translations. fawazahmed0/quran-api remains the source "
                   "for these languages. See PLAN.md section 8.3.")
-    lines.append("- **IslamHouse was verified but not scraped** -- it has a real public API, but book/"
-                  "audio content is PDF/mp3-only (no inline text) and no content-reuse license was "
-                  "found beyond a visitor-privacy policy. See PLAN.md section 8.4.")
+    lines.append("- **IslamHouse was verified but not scraped** -- it has a real public API, but book "
+                  "content is PDF-only (no inline text). Its 'articles' type does have inline text on "
+                  "some items (39.5% of a 200-item sample), but a full probe found the yield of usable "
+                  "(Arabic + target-language, both with inline text) pairs is negligible -- at best a "
+                  "handful per language. No content-reuse license was found beyond a visitor-privacy "
+                  "policy either way. See PLAN.md sections 8.4 and 8.9.")
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     (REPORTS_DIR / "data_report.md").write_text("\n".join(lines), encoding="utf-8")

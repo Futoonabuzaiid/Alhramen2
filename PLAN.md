@@ -591,39 +591,53 @@ project's scope ever becomes commercial, every pair with this `license`
 text needs to be re-excluded (or separate permission obtained from
 Hamidullah's publisher).
 
-### 8.9 IslamHouse "articles" type -- checked, not worth building
+### 8.9 IslamHouse "articles" type -- resolved: confirmed not worth building
 
-Per your request, checked whether IslamHouse's "articles" content type
-(distinct from "books") has inline text instead of a PDF attachment, which
-would have been a much cheaper source than PDF-extracting books.
+Checked whether IslamHouse's "articles" content type (distinct from
+"books") has inline text instead of a PDF attachment, which would have
+been a much cheaper source than PDF-extracting books. Two passes:
 
-**Finding: it's a real field, but unreliable in exactly the way that
-matters.** `full_description` (inline HTML, confirmed) is populated on
-*some* articles -- e.g. Arabic article id 6621 (a 2007-era item) has
-29,988 characters inline -- but is empty (PDF/DOCX-attachment-only, same
-as books) on many others, with no reliable pattern tied to translation
-availability:
-- A sample of 25 *recent* Arabic articles (via `main/get-latest/all/
-  articles/ar/ar/1/25/json`): **0/25** had inline text at all, and of
-  those, only 1-3 per target language even had a translation into
-  en/fr/id/ur/tr.
-- A sample of 3 *older* Arabic articles (2007-era, from a small category):
-  2/3 had substantial inline text on the Arabic side -- but **0/3** had a
-  translation into any of our 5 target languages.
-- Concrete same-work mismatch: article id 2767774 (English) has
-  `full_description` empty (PDF-only), while its Arabic sibling (id
-  2817034, from `get-item-translations`) has 15,656 characters inline.
-- Per-language translated-article *counts* do exist and aren't small (of
-  1,672 Arabic articles): en 494, fr 229, id 820, ur 156, tr 284 -- but
-  these counts say nothing about how many of those have `full_description`
-  populated on both the Arabic and target-language side.
+**Pass 1 (small sample, earlier)**: found `full_description` (inline
+HTML) populated on *some* articles -- e.g. Arabic article id 6621 (a
+2007-era item) has 29,988 characters inline -- but empty (PDF/DOCX-
+attachment-only, same as books) on others, with an apparent recency
+pattern (older articles more likely to have inline text).
 
-**Conclusion**: there's no bulk-extractable subset here without probing
-every candidate item individually (fetch each, check `full_description`
-length on both sides, discard the rest) -- and the two small samples above
-suggest the survival rate would be low. Given HadeethEnc already provides
-clean, fully-aligned, similarly-sized-or-larger data with none of this
-per-item uncertainty, **no downloader was built for this**. If you want an
-exact yield number before writing this off entirely, the next step would
-be running that per-item probe across the full ~500-1600 candidates per
-language rather than a 25-28 item sample -- say the word and I'll run it.
+**Pass 2 (this pass, 200-item probe, definitive)**: sampled 200 Arabic
+article ids spread evenly across the full 2007-2026 time range (paging
+`main/get-latest/all/articles/ar/ar/<page>/10/json` at a fixed stride so
+old and new content are both represented, not just "latest"), then for
+each: fetched the Arabic item, called `main/get-item-translations` to
+find its sibling in each of our 5 target languages, and fetched every
+sibling found. Results:
+- **79/200 (39.5%)** of sampled Arabic articles have substantial inline
+  text (`full_description` > 200 chars) -- confirms the recency pattern,
+  now on a large-enough sample to trust.
+- **Translation coverage into our 5 languages is very low in this
+  sample**: only 3/200 (en), 2/200 (fr), 7/200 (id), 2/200 (ur), 0/200
+  (tr) of the sampled Arabic articles even had a sibling translation at
+  all -- despite the API's own aggregate counts being much larger (of
+  1,672 Arabic articles total: en 494, fr 229, id 820, ur 156, tr 284).
+  This gap between the aggregate counts and what a time-spread sample
+  finds suggests translated articles are not evenly distributed the way
+  this sampling method assumed -- but not something to chase further
+  given the next finding.
+- **Of the few translations found, only about half also have inline text
+  on the target-language side**: en 1/3, fr 0/2, id 1/7, ur 0/2, tr 0/0
+  found. E.g. article id 2767774 (English) has `full_description` empty
+  (PDF-only) while its Arabic sibling id 2817034 has 15,656 characters
+  inline -- confirming this is a real, common failure mode, not a fluke.
+
+**Conclusion (resolved): not worth building.** Even in the most
+optimistic reading of this sample, the fraction of IslamHouse's ~1,672
+articles that would yield a genuine (Arabic text, target-language text)
+pair for any one of our 5 languages is in the low single-digit percent at
+best -- nowhere near enough to justify a dedicated downloader, especially
+against HadeethEnc's clean, fully-aligned 2,000-3,500-pairs-per-language
+baseline with none of this per-item uncertainty. Combined with the
+unresolved license question (no content-reuse terms found beyond the
+visitor-data privacy policy, section 8.4), IslamHouse **stays
+`needs_approval` in `sources.csv` and no downloader was written** --
+treated the same as books, despite articles technically having a partial
+exception that doesn't change the practical outcome.
+
