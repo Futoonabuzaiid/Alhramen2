@@ -99,6 +99,11 @@ def main():
                   "(Arabic + target-language, both with inline text) pairs is negligible -- at best a "
                   "handful per language. No content-reuse license was found beyond a visitor-privacy "
                   "policy either way. See PLAN.md sections 8.4 and 8.9.")
+    lines.append("- **OPUS's TED2020 corpus was checked and not built**: its Usage Policy is "
+                  "No-Derivatives ('you cannot edit, remix, create, modify or alter the form... in any "
+                  "way'), with no research/ML carve-out -- judged not clearly compatible with training "
+                  "use. bible-uedin (CC0, fully unrestricted) was also found but is out of this "
+                  "pipeline's requested scope (Bible text, not Islamic). See PLAN.md section 8.11.")
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     (REPORTS_DIR / "data_report.md").write_text("\n".join(lines), encoding="utf-8")

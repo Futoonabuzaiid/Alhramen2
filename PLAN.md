@@ -641,3 +641,50 @@ visitor-data privacy policy, section 8.4), IslamHouse **stays
 treated the same as books, despite articles technically having a partial
 exception that doesn't change the practical outcome.
 
+### 8.11 OPUS re-verified on the open network: TED2020 checked and excluded, bible-uedin noted
+
+Re-confirmed `opus.nlpl.eu` reachable and re-listed all 5 target-language
+pairs' corpora via the official `opusapi` endpoint (same mechanism as
+section 8.2). Two specific corpora checked this pass, beyond Tanzil
+(already excluded, section 8.2):
+
+**TED2020 (explicitly requested -- spoken-style register)**: all 5 pairs
+confirmed live (~101MB total: ar-en 30.5MB/407,595 pairs, ar-fr
+31.2MB/399,617, ar-id 12.0MB/164,020, ar-ur 1.3MB/15,578, ar-tr
+28.3MB/370,936). Its README points to TED's own Usage Policy
+(https://www.ted.com/about/our-organization/our-policies-terms/
+ted-talks-usage-policy), which was read directly. Key clauses:
+- **NC**: "you cannot use TED Talks in any commercial context or to gain
+  any type of revenue" -- satisfied by this project's non-commercial
+  status (see "Project license basis" above).
+- **ND**: "no derivative works are permitted so you cannot edit, remix,
+  create, modify or alter the form of the TED Talks in any way"; "any
+  edits, alternate usage rights or changes to these documents are not
+  permitted without permission."
+
+Unlike the Tanzil/Hamidullah restriction (which only limits *purpose* --
+non-commercial vs. commercial -- and was judged compliant), TED's ND
+clause restricts *modification itself*, with no stated exception for
+research or ML training, and the policy doesn't address AI/ML use either
+way. Given your instruction to build a downloader only where terms
+clearly permit training use, and that reformatting text into training
+pairs (let alone training a model on it) is plausibly exactly the kind of
+"alter[ation]" this clause is written to prohibit, **TED2020 was not
+downloaded or integrated**. This is also true independent of domain fit:
+TED talks are general-topic, not religious-register content, so even a
+clean license would have made it a lower-priority addition than the
+Quran/hadith sources already in the pipeline.
+
+**bible-uedin (found while re-listing, not explicitly requested)**:
+CC0 1.0 (public domain) per its README -- no restriction of any kind.
+62,195 ar-en pairs found. This is genuinely religious-register text
+(a parallel Bible corpus), domain-adjacent to but distinct from the
+Quran/hadith/Islamic-sermon focus of this pipeline. Not downloaded or
+built into anything this pass since it wasn't requested and its
+relevance to an Islamic-sermon-translation system is unclear -- flagged
+in `sources.csv` as a clean, ready-to-use option if you want non-Quranic
+formal religious-register text considered later.
+
+No downloader was written for either corpus this pass (TED2020 excluded
+on license grounds, bible-uedin out of requested scope).
+
