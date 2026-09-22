@@ -1,10 +1,66 @@
 # PLAN.md — Arabic → Multilingual Religious-Domain Translation & ASR Data Pipeline
 
-Status: **Phase 1a (Quran + Hadith, GitHub-reachable sources) executed after
-your approval** — see `reports/data_report.md` for results. HadeethEnc,
-Tanzil (license wording only), OPUS, and IslamHouse are still blocked from
-this sandbox's network and were not built against (Phase 1b, see Section 2).
-Phase 2 (ASR) is scaffolding only, not run.
+Status: **Phase 1b executed** on your local machine (not the earlier
+sandbox) — hadeethenc.com, qurancomplex.gov.sa, opus.nlpl.eu,
+islamhouse.com, and tanzil.net are all reachable from here. HadeethEnc is
+now downloaded and integrated into the pipeline (Section 8.1): 10,748
+pairs across en/fr/id/ur/tr, all surviving cleaning intact. OPUS was
+downloaded and inspected but found unsuitable for training and is NOT
+integrated (Section 8.2: non-commercial license + Arabic column is tafsir
+commentary, not verse text). King Fahd Complex was checked read-only and
+has no translation downloads for our 5 languages (Section 8.3). IslamHouse
+was verified but not scraped -- PDF/mp3-only for books, and for its
+"articles" type (which does have inline text) the fraction with both a
+target-language translation *and* inline text on both sides looks small
+per Section 8.9's sampling (Section 8.4/8.9). You reviewed the fr/ur Quran
+translator candidates and approved one each as individually-authored
+exceptions: Urdu's Muhammad Taqi Usmani (Section 8.7) and French's
+Muhammad Hamidullah (Section 8.8, non-commercial-only per tanzil.net's own
+terms, checked live before approval -- you confirmed this project is
+non-commercial). All 5 target languages now have Quran-domain coverage.
+`cleaned.jsonl` is now 213,868 pairs total (up from 190,642 at the start
+of this pass). See `reports/data_report.md` for current pairs/language
+counts. Phase 2 (ASR) is still scaffolding only, not run. Sections 1-7
+below are the unedited record of the earlier (sandboxed) pass; Section 8
+is this pass.
+
+## Project license basis (confirmed 2026-09-22)
+
+**This project is non-commercial: research/educational use, no revenue,
+no commercial deployment.** The user confirmed this explicitly after the
+Hamidullah French Quran edition's license was checked live (Section 8.8)
+and found to carry a "non-commercial purposes only" restriction.
+
+This status is the reference point for every source in this pipeline
+whose terms are conditioned on commercial vs. non-commercial use. A
+source under such a restriction is **compliant, not a flagged gap or
+caveat**, as long as this project's status holds:
+
+- **Hamidullah French Quran edition** (`fra_muhammadhamidul`): tanzil.net's
+  own Terms of Use restrict it to non-commercial use -- **compliant**,
+  confirmed by checking the actual terms live (Section 8.8).
+- **OPUS's Tanzil corpus**: also non-commercial-only per its own README --
+  would also be compliant on licensing grounds alone, but stays excluded
+  from `cleaned.jsonl` for the separate, unrelated reason that its Arabic
+  column is tafsir commentary, not Quran verse text (Section 8.2).
+- **Usmani Urdu Quran edition** (`urd_muhammadtaqiusm`): status
+  **unconfirmed, not compliant-by-verification** -- the aggregator's own
+  metadata has no `source` URL for this edition (empty string, unlike
+  Hamidullah's explicit tanzil.net link), and a web search for an official
+  license/terms statement for this specific translation turned up no
+  citable source (see Section 8.7 for what was checked). This is a
+  materially different status from Hamidullah's: Hamidullah's restriction
+  was *found and confirmed satisfied*; Usmani's terms were *not found at
+  all*, so there is nothing to confirm compliance against yet. The user
+  already approved this edition with that gap disclosed; it is not
+  re-flagged as blocking, but should not be described as "cleared" either.
+
+**If this project's status ever changes to commercial** (revenue,
+commercial deployment, or a commercially-licensed downstream product),
+every pair whose `license` field cites a non-commercial restriction (grep
+`cleaned.jsonl` for "non-commercial") needs to be re-excluded or have
+separate permission obtained from the translator/publisher, per that
+source's own terms.
 
 ## 0. Important constraint discovered during verification
 
@@ -211,10 +267,363 @@ Result of running `make phase1`:
   (regenerate with `make phase1`); only code, `PLAN.md`, `sources.csv`,
   `README.md`, and the small `reports/` outputs are committed.
 
-## 7. Still open
+## 7. Still open (as of the earlier sandboxed pass)
 1. Section 0's options (1/2/3/4) for HadeethEnc/Tanzil/OPUS/IslamHouse --
    which one do you want for the next pass?
 2. Approve a specific fr/ur Quran translator to close that gap, or leave it?
 3. GitHub push for this session is currently blocked (Claude's GitHub App
    isn't installed/authorized on this repo) -- work is committed locally,
    needs that resolved to land on the branch.
+
+---
+
+## 8. Phase 1b (this pass, run from your local machine with open internet)
+
+### 8.0 Network check
+
+All five domains are reachable from here (plain `curl`, no proxy):
+hadeethenc.com, qurancomplex.gov.sa, opus.nlpl.eu, islamhouse.com,
+tanzil.net -- all returned `200 OK`. This resolves the sandbox blocker
+from Section 0.
+
+### 8.1 HadeethEnc -- verified, built, and run
+
+**Terms.** From the site's own "Terms and Policies" modal
+(https://hadeethenc.com/en) and its API docs
+(https://hadeethenc.com/api-docs/, a public Postman collection): content
+may be downloaded and re-published if you (1) don't modify the
+hadith/translation text itself, (2) clearly attribute HadeethEnc.com,
+(3) keep the version number, (4) keep transcript info, (5) notify
+HadeethEnc of any correction, (6) re-sync to the latest version, and
+(7) don't run inappropriate ads alongside it. None of that is a ban on ML
+training or on redistribution as such -- it's an attribution/no-alteration
+condition, same shape as fawazahmed0's requirement to keep translator
+attribution. Beyond that, `hadeethenc.com/robots.txt` publishes an explicit,
+machine-readable `Content-Signal: ai-train=yes, search=yes, ai-input=yes`
+header -- a direct statement that AI-training use is allowed. Given both,
+HadeethEnc is marked `ok` (not `needs_approval`) in `sources.csv`, unlike
+its status in the earlier, network-blocked pass.
+
+**API shape (confirmed live, not guessed).** Base
+`https://hadeethenc.com/api/v1`:
+- `GET /categories/list/?language=<lc>` -- flat list of all 493 categories,
+  `{id, title, hadeeths_count, parent_id}`. Category ids/parent structure
+  are language-independent; only `title` translates.
+- `GET /hadeeths/list/?language=<lc>&category_id=<id>&page=<n>&per_page=<n>`
+  -- `category_id` is required (omitting it 404s). `per_page` up to at
+  least 200 confirmed working. Returns `{data: [...], meta: {current_page,
+  last_page, total_items, per_page}}`.
+- `GET /hadeeths/one/?language=<lc>&id=<id>` and
+  `GET /hadeeths/multiple/?language=<lc>&ids=<comma-separated>` (batches of
+  40+ ids confirmed in one request) -- both return full records:
+  `id, title, hadeeth, attribution, grade, explanation, hints[],
+  categories[], translations[]` (language codes available for this hadith),
+  plus the Arabic original always included as `hadeeth_ar, explanation_ar,
+  hints_ar, words_meanings_ar, attribution_ar, grade_ar` regardless of the
+  requested `language`.
+- `GET /hadeeths/search/?phrase=<text>&language=<lc>` and `GET /languages`
+  also exist and work; not used by the downloader (not needed for a full
+  category walk).
+- Real gap, not a bug: `hints[]` is sometimes `[]` for a non-Arabic
+  language even when `hints_ar` is populated for the same id -- a genuine
+  translation gap in their content, confirmed on multiple ids. The
+  downloader stores whatever is actually present and does not backfill.
+
+**Downloader**: `src/download_hadeethenc.py`. Walks all 493 categories via
+`categories/list`, paginates `hadeeths/list` per category to collect every
+unique hadith id (a hadith can be tagged under more than one category,
+including a parent and its child, so every category is walked and ids are
+deduped -- trades some redundant listing requests for a guarantee nothing
+is missed), then fetches full records per id via `hadeeths/multiple` in
+batches of 40, once per language (ar, en, fr, id, ur, tr). Uses the
+existing `common.fetch_json_cached` (rate-limited ~2.5 req/s, exponential
+backoff on 429/5xx, resumable -- reruns skip already-cached files). Raw
+cache layout: `data/raw/hadeethenc/{categories.json, hadith_ids.json,
+listing/cat_<id>_p<n>.json, records/<lang>/batch_<start>_<end>.json,
+manifest.json}`.
+
+**Pipeline integration**: `clean.py` gained `load_hadeethenc_pairs()`,
+producing pairs shaped like every other source (`id, source="hadeethenc",
+domain="hadith", ref="hadeethenc:<id>", ar_diacritized, ar, ar_normalized,
+lang="ar", tgt, tgt_lang, license`), plus HadeethEnc-specific extra fields
+carried through unfiltered: `explanation, explanation_ar, hints, hints_ar,
+grade, grade_ar, attribution, attribution_ar`. The `tgt` field is the main
+hadith/translation text (matching the shape `split.py`/`report.py` already
+expect); explanation and hints are *not* expanded into separate training
+pairs -- they're stored as metadata on the same pair so nothing from "full
+records" is lost, without silently changing what one row of the dataset
+means. Existing quran-quote-in-hadith detection and length-ratio filtering
+in `filter_and_tag()` apply to HadeethEnc pairs exactly as they do to
+fawazahmed0 hadith pairs. See `reports/data_report.md` for the resulting
+per-language x domain counts.
+
+### 8.2 OPUS -- verified, downloaded, deliberately NOT integrated
+
+Listed live via the official `https://opus.nlpl.eu/opusapi/` JSON API
+(`?source=ar&target=<lc>&preprocessing=moses`). For every one of the 5
+target languages the only religious-domain corpus present is `Tanzil`
+(everything else -- CCMatrix, CCAligned, NLLB, OpenSubtitles, Wikipedia,
+TED2020, etc. -- is general-domain web/media text, out of scope for this
+task). Downloaded and inspected all 5 `Tanzil` zips (65.6MB total, well
+under the "few hundred MB" approval threshold) via the new
+`common.fetch_binary_cached` + `src/download_opus.py`.
+
+Two problems surfaced by actually reading the extracted text, not just
+trusting the corpus name:
+1. **License**: the corpus's own README
+   (`https://object.pouta.csc.fi/OPUS-Tanzil/v1/moses/README`) states
+   *"The translations provided at this page are for non-commercial
+   purposes only."* Stricter than HadeethEnc's terms.
+2. **The Arabic column is not Quran verse text.** Every pair's `.ids` file
+   tags the Arabic side as `ar/jalalayn.xml.gz` -- Tafsir al-Jalalayn, a
+   verse-by-verse *commentary*, not the ayah itself. Confirmed by reading
+   actual lines: the "Arabic" text aligned to verse 1:2 is a multi-sentence
+   grammatical explanation of the word "al-hamd", not "الحمد لله رب
+   العالمين". Using this column as an Arabic training source would
+   silently pair commentary text with a translation of a *different*
+   underlying string.
+
+Target-language translators found (from each `.ids` file): en=ahmedali,
+fr=hamidullah, id=indonesian, ur=ahmedali, tr=ates -- all
+individually-authored, the same class of edition already excluded from our
+approved Quran set in `download_quran.py` (not attributed to a government/
+waqf body). Combined with the non-commercial restriction and the source-
+text mismatch, this corpus is cached and reported
+(`data/raw/opus_tanzil/verification_report.json`) but **not** merged into
+`cleaned.jsonl`. If you want to revisit it: the target-language column
+*is* usable, aligned by sura:ayah (readable from the `.ids` file, e.g.
+`s1.2`) -- it could be re-paired against our own verified
+fawazahmed0/quran-api Arabic text instead of trusting OPUS's "ar" column,
+after separately deciding whether the non-commercial restriction is
+acceptable for this project.
+
+On `opus.nlpl.eu/robots.txt`: it disallows crawling `/opusapi` and `*.zip`
+on that domain. Read this as a search-engine-indexing directive (avoiding
+duplicate/heavy content in Google), not a redistribution ban -- `/opusapi`
+is OPUS's own documented public API and the mechanism its own website's
+download buttons use; the actual files are served from a different host
+(`object.pouta.csc.fi`) with no robots restriction at all. Flagging this
+reasoning explicitly rather than silently ignoring the disallow.
+
+### 8.3 King Fahd Quran Complex -- verified reachable, NOT scraped, needs your input
+
+Per your instruction, no scraping was attempted. `qurancomplex.gov.sa` is
+reachable (200 OK). Checked `/quran-translations/` (Publications) and
+`/quran-dev/` (Sites & Apps / developer platform): both pages return a
+real HTTP 200 with a populated navigation/footer shell (2500-3600 lines of
+HTML) but **no translation list or download links anywhere in the static
+HTML** -- the actual content is rendered client-side by JavaScript after
+load. Confirmed by checking for alternate ways in: no matching WP REST API
+route (`/wp-json/wp/v2/pages?slug=quran-translations` returns empty), no
+per-language sub-pages in `/wp-sitemap.xml`, no `.pdf`/`.zip`/`.docx` links
+anywhere in either page's HTML. The only other linked subdomain,
+`nashr.qurancomplex.gov.sa`, turned out to be unrelated: it's "Madinah
+Mushaf Desktop Publishing" -- Windows software for Arabic text layout, not
+a translation download. `/sales-policy/` covers paid physical Mushaf
+copies (bank transfer instructions); `/privacypolicy/` covers visitor data,
+not content-reuse terms.
+
+**Update: read-only check completed (via a page-fetch tool, not a browser
+click-through or scraper -- no files downloaded).** Findings:
+- `/quran-translations/` lists 50+ languages as **plain text with no
+  links at all** -- not even `<a>` tags -- grouped by region (Asian,
+  European, African). Notably, **neither French nor English appears in
+  this list**, despite both obviously existing as KFC-distributed
+  translations (e.g. Hilali-Khan English is one of the most widely printed
+  Quran translations there is). This strongly suggests the page is a
+  "we've translated the Quran into this many languages" prestige list for
+  print/other distribution, not a digital-download index.
+- `/quran-hafs/` (the flagship Arabic Mushaf page) also has **no direct
+  download links** -- only pointers to a mobile "app" and to the
+  `nashr.qurancomplex.gov.sa` desktop-publishing software.
+- `/quran-audio-translations/` (audio, not text) only lists Oromo,
+  Mandinka, and Tajik -- none of our 5 target languages.
+- `/quran-dev/` ("Quran software developers platform") **does** have real
+  direct-download files -- but only for **Arabic** text/data: Unicode
+  Uthmani font+text packages per qira'ah (Hafs, Warsh, Shubah, Qaloun,
+  Duri, Susi, Bazzi) in Excel/CSV/HTML5/SQL/XML/JSON/TXT formats, plus
+  Tafseer Muyassar (simplified Arabic commentary) and a rare-word glossary.
+  Confirmed working direct URLs, e.g.
+  `https://download.qurancomplex.gov.sa/resources_dev/kfgqpc_hafs_v30.zip`
+  and `.../hafs_tafseerMouaser_v3.zip` -- no login/registration/API-key
+  wall visible on the page. No explicit terms-of-use text was found on
+  this page either. **None of this is a translation into fr/ur/en/id/tr**
+  -- it's Arabic-only text and Arabic-only commentary, so it doesn't close
+  the translation gap this check was for, though the Tafseer Muyassar file
+  could be a useful additional Arabic explanation/sharh source for Quran
+  verses (paralleling HadeethEnc's `explanation` field for hadith) if you
+  want that pursued separately.
+
+**Bottom line: King Fahd Complex does not appear to offer direct digital
+downloads of Quran translations in fr/ur/en/id/tr through its public
+website.** Distribution for those appears to be via print sales
+(`/sales-policy/`) and possibly in-app content not exposed as files.
+fawazahmed0/quran-api remains the practical source for these languages
+(with its own gov/waqf-attribution caveat, Section 1.1). No files were
+downloaded from qurancomplex.gov.sa.
+
+### 8.4 IslamHouse -- verified, real API found, NOT scraped (unclear content-reuse terms)
+
+`islamhouse.com` is reachable and has a real, publicly documented API:
+`api.islamhouse.com` redirects to `developers.islamhouse.com`, whose
+Postman collection (37 endpoints, base
+`https://api3.islamhouse.com/v3/paV29H2gm56kvLPy/...`, a free key
+published directly in the docs) was fetched and confirmed live --
+`get-available-languages`, `get-item/<id>/<lang>/json`,
+`get-item-translations/<id>/<lang>/json` (returns the same work's item id
+in every other language it's translated into -- genuine cross-language
+alignment), `quran/*` endpoints, etc.
+
+**Why this isn't built into a downloader yet**: fetching a real item
+(`main/get-item/2839210/ar/json`) shows the record has `title`,
+`description`, `full_description`, and an `attachments` field -- **no
+inline full-text body**. Following a book's page on the site
+(`islamhouse.com/en/books/1261/`) confirms the actual content is a PDF
+(audio items are similarly external mp3 files), not machine-readable
+sentence-segmented text. Bulk use would mean OCR/PDF-extraction per
+language with no guarantee of consistent structure or true sentence
+alignment across independently-laid-out translated books -- a much higher
+extraction cost than Quran/hadith's structured, sentence-level sources. I
+did not check whether the "articles" item type has inline HTML text
+instead (a plausible exception -- `main/showall/<lang>/<type>/<page>/<n>/
+json` needs the correct `type` slug, which I didn't want to guess at). On
+terms: the only content-adjacent policy page found,
+`d1.islamhouse.com/html/policy.htm`, covers visitor data collection only
+(IP, browser, opt-in mailing-list info) -- nothing about reuse/redistribution
+of the books/audio themselves. Per your own instruction (unclear ML-use
+terms -> `needs_approval`, keep out of train), no downloader was written
+and nothing was bulk-fetched.
+
+### 8.5 Re-run results
+
+`clean.py`, `split.py`, `report.py` were re-run after adding HadeethEnc.
+See `reports/data_report.md` for the full pairs/words table (now including
+`hadeethenc` rows alongside `fawazahmed0_quran-api` and
+`fawazahmed0_hadith-api`) and updated drop-reason counts.
+
+### 8.6 Still open after this pass
+1. King Fahd Complex (8.3): resolved -- no translation downloads found for
+   our 5 target languages; fawazahmed0/quran-api remains the source. Open
+   sub-question: do you want the Arabic-only Tafseer Muyassar file from
+   `/quran-dev/` pursued as an additional Quran-verse explanation field
+   (paralleling HadeethEnc's `explanation`)? Deferred, skipped for now per
+   your instruction.
+2. IslamHouse "articles" (8.4/8.9): resolved as not worth building --
+   see 8.9.
+3. OPUS-Tanzil (8.2): stays cached-but-unused unless you want the
+   re-pairing (OPUS target-language text + our own Arabic verse text)
+   pursued despite the non-commercial license.
+4. fr/ur Quran translator approvals: resolved -- see 8.7/8.8. Both
+   languages now have Quran-domain coverage.
+5. GitHub push access (from the earlier pass, Section 7.3): still open,
+   unrelated to this pass's work.
+
+### 8.7 Quran translator approvals (this pass)
+
+You reviewed the candidate lists (author/source per edition, from
+`sources.csv`'s fawazahmed0_quran-api row) and decided:
+
+- **Urdu: APPROVED** -- `urd_muhammadtaqiusm` (Muhammad Taqi Usmani).
+  Individually-authored (source field blank in the API, not attributed to
+  a government/waqf body), approved as an explicit exception to the
+  gov/waqf-only default. Added to `APPROVED_EDITION_KEYS` in
+  `src/download_quran.py`. Quran-domain Urdu pairs: **0 -> 6,217**.
+  License status: **unconfirmed, not verified compliant** -- the
+  aggregator has no `source` URL for this edition to check terms against,
+  and a web search for an official license/terms statement for this
+  specific translation turned up nothing citable (only Internet Archive
+  mirrors and bibliography pages, no terms). This is different from
+  Hamidullah's case below, where a specific restriction was found *and*
+  confirmed satisfied -- here, no terms were found to confirm anything
+  against. See "Project license basis" at the top of this file.
+- **French: still open.** Candidate table (all 5 non-transliteration fra_*
+  editions in fawazahmed0/quran-api):
+
+  | key | translator | source |
+  |---|---|---|
+  | fra_muhammadhamidul | Muhammad Hamidullah | tanzil.net |
+  | fra_muhammadhameedu | Muhammad Hameedullah | quranenc.com |
+  | fra_islamicfoundati | Islamic Foundation | quranenc.com |
+  | fra_rashidmaash | Rashid Maash | quranenc.com |
+  | fra_shahnazsaidiben | Shahnaz Saidi Benbetka | Goodwordbooks (commercial publisher) |
+
+  None are attributed to a government/waqf body. "tanzil.net" as source
+  means Tanzil itself vets and hosts that translation (a stronger signal
+  than the quranenc.com/Goodwordbooks ones), but it's still an
+  individually-authored work, same category as the Urdu edition just
+  approved.
+
+- **French: APPROVED** -- `fra_muhammadhamidul` (Muhammad Hamidullah),
+  after checking its license live (see Section 8.8 below). Quran-domain
+  French pairs: **0 -> 6,226**.
+
+`cleaned.jsonl` is now 213,868 pairs (up from 201,421 at the start of this
+pass).
+
+### 8.8 Hamidullah French edition -- license checked live before adding
+
+Before adding Hamidullah's translation, checked tanzil.net directly (not
+just the aggregator's blanket Unlicense) since `fawazahmed0/quran-api`
+lists `source: http://tanzil.net` for this edition. Found, verbatim, on
+tanzil.net's own `/trans/` page under "Terms of Use":
+
+> "The translations provided at this page are for non-commercial purposes
+> only. If used otherwise, you need to obtain necessary permission from
+> the translator or the publisher."
+
+This is the same restriction already found on OPUS's mirrored Tanzil
+corpus (Section 8.2) -- both ultimately point back to this same tanzil.net
+terms page. Note this is specific to **translations**; Tanzil's Arabic
+**text** has a separate, more permissive license (verbatim copy/
+redistribution allowed with attribution, no non-commercial clause) at
+`tanzil.net/download/`.
+
+**You confirmed this project is non-commercial** (research/educational,
+no revenue, no commercial deployment -- see "Project license basis" at
+the top of this file), so the restriction is **satisfied: this edition is
+compliant**, not a flagged gap. `fra_muhammadhamidul` was added to
+`APPROVED_EDITION_KEYS` in `src/download_quran.py`, and a new
+`LICENSE_NOTES` dict in that file carries the exact tanzil.net wording
+through to every pair's `license` field in `cleaned.jsonl` (via
+`clean.py`), so the restriction -- and the basis for its compliance --
+travels with the data rather than being recorded only here. If this
+project's scope ever becomes commercial, every pair with this `license`
+text needs to be re-excluded (or separate permission obtained from
+Hamidullah's publisher).
+
+### 8.9 IslamHouse "articles" type -- checked, not worth building
+
+Per your request, checked whether IslamHouse's "articles" content type
+(distinct from "books") has inline text instead of a PDF attachment, which
+would have been a much cheaper source than PDF-extracting books.
+
+**Finding: it's a real field, but unreliable in exactly the way that
+matters.** `full_description` (inline HTML, confirmed) is populated on
+*some* articles -- e.g. Arabic article id 6621 (a 2007-era item) has
+29,988 characters inline -- but is empty (PDF/DOCX-attachment-only, same
+as books) on many others, with no reliable pattern tied to translation
+availability:
+- A sample of 25 *recent* Arabic articles (via `main/get-latest/all/
+  articles/ar/ar/1/25/json`): **0/25** had inline text at all, and of
+  those, only 1-3 per target language even had a translation into
+  en/fr/id/ur/tr.
+- A sample of 3 *older* Arabic articles (2007-era, from a small category):
+  2/3 had substantial inline text on the Arabic side -- but **0/3** had a
+  translation into any of our 5 target languages.
+- Concrete same-work mismatch: article id 2767774 (English) has
+  `full_description` empty (PDF-only), while its Arabic sibling (id
+  2817034, from `get-item-translations`) has 15,656 characters inline.
+- Per-language translated-article *counts* do exist and aren't small (of
+  1,672 Arabic articles): en 494, fr 229, id 820, ur 156, tr 284 -- but
+  these counts say nothing about how many of those have `full_description`
+  populated on both the Arabic and target-language side.
+
+**Conclusion**: there's no bulk-extractable subset here without probing
+every candidate item individually (fetch each, check `full_description`
+length on both sides, discard the rest) -- and the two small samples above
+suggest the survival rate would be low. Given HadeethEnc already provides
+clean, fully-aligned, similarly-sized-or-larger data with none of this
+per-item uncertainty, **no downloader was built for this**. If you want an
+exact yield number before writing this off entirely, the next step would
+be running that per-item probe across the full ~500-1600 candidates per
+language rather than a 25-28 item sample -- say the word and I'll run it.

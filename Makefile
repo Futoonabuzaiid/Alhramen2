@@ -1,21 +1,29 @@
-.PHONY: download-quran download-hadith download-phase1 clean split report phase1 all
+PYTHON ?= python3
+
+.PHONY: download-quran download-hadith download-hadeethenc download-opus download-phase1 clean split report phase1 all
 
 download-quran:
-	python3 src/download_quran.py
+	$(PYTHON) src/download_quran.py
 
 download-hadith:
-	python3 src/download_hadith.py
+	$(PYTHON) src/download_hadith.py
 
-download-phase1: download-quran download-hadith
+download-hadeethenc:
+	$(PYTHON) src/download_hadeethenc.py
+
+download-opus:
+	$(PYTHON) src/download_opus.py
+
+download-phase1: download-quran download-hadith download-hadeethenc download-opus
 
 clean:
-	python3 src/clean.py
+	$(PYTHON) src/clean.py
 
 split:
-	python3 src/split.py
+	$(PYTHON) src/split.py
 
 report:
-	python3 src/report.py
+	$(PYTHON) src/report.py
 
 # Phase 1: download -> clean -> split -> report
 phase1: download-phase1 clean split report
@@ -26,10 +34,10 @@ all: phase1
 # automatically. See PLAN.md; do not invoke without separate approval and
 # the extra dependencies in requirements.txt.
 phase2-audio-prep:
-	python3 src/audio_prep.py --input data/raw/<source>/audio --out data/processed/asr_clips
+	$(PYTHON) src/audio_prep.py --input data/raw/<source>/audio --out data/processed/asr_clips
 
 phase2-transcribe:
-	python3 src/transcribe.py --manifest data/processed/asr_clips/clips_manifest.jsonl --out data/processed/asr_clips/transcripts.jsonl
+	$(PYTHON) src/transcribe.py --manifest data/processed/asr_clips/clips_manifest.jsonl --out data/processed/asr_clips/transcripts.jsonl
 
 phase2-review:
-	python3 src/review_tool.py --transcripts data/processed/asr_clips/transcripts.jsonl --out data/processed/asr_clips/reviewed.jsonl
+	$(PYTHON) src/review_tool.py --transcripts data/processed/asr_clips/transcripts.jsonl --out data/processed/asr_clips/reviewed.jsonl

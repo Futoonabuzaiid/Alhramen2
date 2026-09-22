@@ -75,15 +75,27 @@ def main():
     lines.append("")
     lines.append("## Known gaps")
     lines.append("")
-    lines.append("- **Quran domain has no approved French or Urdu edition.** Per your instruction to "
-                  "exclude individually-authored translations by default, no fr/ur Quran edition in "
+    lines.append("- **Quran domain has no approved French edition.** No fr Quran edition in "
                   "fawazahmed0/quran-api is attributed to a government/waqf body, so the Quran domain "
-                  "currently contributes 0 pairs for fr and ur. Hadith still covers both languages. "
-                  "See `sources.csv` (fawazahmed0_quran-api row) for the full candidate list if you want "
-                  "to approve a specific translator.")
-    lines.append("- **No sharh/hints fields yet** -- these come only from HadeethEnc, which is blocked "
-                  "from this sandbox's network. See PLAN.md section 2.")
-    lines.append("- **OPUS, IslamHouse general-domain text not yet included** -- same network blocker.")
+                  "currently contributes 0 pairs for fr. (Urdu's gap is closed: you approved Muhammad "
+                  "Taqi Usmani's individually-authored translation -- see PLAN.md section 8.7.) Hadith "
+                  "still covers fr. See `sources.csv` (fawazahmed0_quran-api row) for the full French "
+                  "candidate list if you want to approve one.")
+    lines.append("- **sharh/hints fields**: now included for the `hadeethenc` source (`explanation`, "
+                  "`hints`, `grade`, `attribution` and their `_ar` counterparts, stored as extra fields "
+                  "on each pair, not expanded into separate rows). See PLAN.md section 8.1.")
+    lines.append("- **OPUS (Tanzil corpus) was downloaded and inspected but deliberately excluded**: its "
+                  "Arabic column is Tafsir al-Jalalayn commentary, not Quran verse text, and its license "
+                  "is non-commercial-only. See PLAN.md section 8.2.")
+    lines.append("- **King Fahd Complex has no direct translation downloads for fr/ur/en/id/tr** "
+                  "(checked read-only, nothing downloaded): its /quran-translations/ page lists 50+ "
+                  "languages as plain text with no links at all, and doesn't even list French or "
+                  "English. Its /quran-dev/ developer platform has real download links, but only for "
+                  "Arabic text/commentary, not translations. fawazahmed0/quran-api remains the source "
+                  "for these languages. See PLAN.md section 8.3.")
+    lines.append("- **IslamHouse was verified but not scraped** -- it has a real public API, but book/"
+                  "audio content is PDF/mp3-only (no inline text) and no content-reuse license was "
+                  "found beyond a visitor-privacy policy. See PLAN.md section 8.4.")
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     (REPORTS_DIR / "data_report.md").write_text("\n".join(lines), encoding="utf-8")

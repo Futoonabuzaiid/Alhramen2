@@ -69,3 +69,39 @@ def fetch_json_cached(url: str, cache_path: Path, logger: logging.Logger, sessio
         backoff = min(backoff * 2, 30)
     logger.error(f"giving up on {url}: {last_exc}")
     return None
+
+
+def fetch_binary_cached(url: str, cache_path: Path, logger: logging.Logger, session: requests.Session = None) -> bool:
+    """Fetch binary content (e.g. a .zip) from url, caching raw bytes at cache_path.
+    Resumable: skips the request entirely if cache_path already exists.
+    Returns True if cache_path exists and is populated after the call."""
+    cache_path = Path(cache_path)
+    if cache_path.exists():
+        logger.info(f"cache hit: {cache_path}")
+        return True
+
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    session = session or requests.Session()
+    backoff = 1.0
+    last_exc = None
+    for attempt in range(1, MAX_RETRIES + 1):
+        _throttle()
+        try:
+            resp = session.get(url, timeout=60)
+            if resp.status_code == 200:
+                cache_path.write_bytes(resp.content)
+                logger.info(f"fetched: {url} -> {cache_path} ({len(resp.content)} bytes)")
+                return True
+            elif resp.status_code in (429, 500, 502, 503, 504):
+                logger.warning(f"retryable HTTP {resp.status_code} for {url}, attempt {attempt}/{MAX_RETRIES}")
+                last_exc = RuntimeError(f"HTTP {resp.status_code}")
+            else:
+                logger.error(f"HTTP {resp.status_code} for {url}, not retrying")
+                return False
+        except requests.RequestException as e:
+            logger.warning(f"request error for {url}: {e}, attempt {attempt}/{MAX_RETRIES}")
+            last_exc = e
+        time.sleep(backoff)
+        backoff = min(backoff * 2, 30)
+    logger.error(f"giving up on {url}: {last_exc}")
+    return False
