@@ -6,6 +6,7 @@ data/processed/dropped.jsonl.
 import csv
 import json
 import random
+import statistics
 from collections import defaultdict
 from pathlib import Path
 
@@ -20,6 +21,14 @@ SEED = 20260101
 
 def word_count(s: str) -> int:
     return len(s.split())
+
+
+def percentile(sorted_vals, p):
+    """Nearest-rank percentile, 0 <= p <= 100, sorted_vals non-empty."""
+    if not sorted_vals:
+        return 0
+    idx = min(len(sorted_vals) - 1, max(0, int(round(p / 100 * (len(sorted_vals) - 1)))))
+    return sorted_vals[idx]
 
 
 def main():
@@ -56,6 +65,38 @@ def main():
         avg_ar = s["ar_words"] / s["n"]
         avg_tgt = s["tgt_words"] / s["n"]
         lines.append(f"| {source} | {domain} | {lang} | {s['n']} | {avg_ar:.1f} | {avg_tgt:.1f} |")
+    lines.append("")
+
+    # --- hadith Arabic word-count percentiles (for prepare_for_training.py's
+    # length rule -- see src/prepare_for_training.py and PLAN.md) ---
+    hadith_word_counts_by_source = defaultdict(list)
+    hadith_word_counts_all = []
+    for r in rows:
+        if r["domain"] != "hadith":
+            continue
+        n = word_count(r["ar"])
+        hadith_word_counts_all.append(n)
+        hadith_word_counts_by_source[r["source"]].append(n)
+
+    lines.append("## Hadith Arabic word-count percentiles")
+    lines.append("")
+    lines.append("Word counts (whitespace-split, not tokenizer counts) on the `ar` field, "
+                  "one row per (hadith, target-language) pair -- so a hadith with 5 translations "
+                  "is counted 5 times, weighting by how often that length appears in training data.")
+    lines.append("")
+    lines.append("| source | n | p50 | p90 | p99 | max |")
+    lines.append("|---|---:|---:|---:|---:|---:|")
+    for source in sorted(hadith_word_counts_by_source):
+        vals = sorted(hadith_word_counts_by_source[source])
+        lines.append(f"| {source} | {len(vals)} | {percentile(vals, 50)} | {percentile(vals, 90)} | "
+                      f"{percentile(vals, 99)} | {vals[-1]} |")
+    all_sorted = sorted(hadith_word_counts_all)
+    lines.append(f"| **all hadith** | {len(all_sorted)} | {percentile(all_sorted, 50)} | "
+                  f"{percentile(all_sorted, 90)} | {percentile(all_sorted, 99)} | {all_sorted[-1]} |")
+    lines.append("")
+    lines.append("See `src/prepare_for_training.py` for the actual NLLB-tokenizer-based length rule "
+                  "(targets ~128 tokens, not words) applied on top of this data; its own report covers "
+                  "how many pairs were split/truncated/left as-is.")
 
     # --- dropped items summary ---
     drop_by_reason = defaultdict(int)
@@ -104,6 +145,13 @@ def main():
                   "way'), with no research/ML carve-out -- judged not clearly compatible with training "
                   "use. bible-uedin (CC0, fully unrestricted) was also found but is out of this "
                   "pipeline's requested scope (Bible text, not Islamic). See PLAN.md section 8.11.")
+    lines.append("- **37.4% of training pairs get truncated at the ~128-token length rule** "
+                  "(`src/prepare_for_training.py`): 120,044 as-is, 208 split, 71,811 truncated, out of "
+                  "192,063 input pairs. Truncation is lossy (cuts mid-sentence); the low split rate "
+                  "(0.1%) means most over-length pairs don't have a clean 1:1 sentence-count match "
+                  "between Arabic and the target language. See the hadith word-count percentiles above "
+                  "-- p99 is 270+ words, and some outliers reach ~1,900 words (full isnad chains), which "
+                  "is what drives this.")
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     (REPORTS_DIR / "data_report.md").write_text("\n".join(lines), encoding="utf-8")

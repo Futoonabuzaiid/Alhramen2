@@ -27,13 +27,21 @@ Phase 2 (ASR) is scaffolding only -- `src/audio_prep.py`, `src/transcribe.py`,
 `src/review_tool.py` exist but have not been run and require separate
 approval plus GPU/audio dependencies.
 
+IslamHouse's "articles" content type (which does have inline text, unlike
+books) and OPUS's TED2020/bible-uedin corpora were also investigated and
+found not worth building into the pipeline -- see PLAN.md sections
+8.9-8.11.
+
+`src/prepare_for_training.py` (NLLB-tokenizer-based length rule, ~128
+tokens/side) is built -- see "Training prep" below.
+
 ## Project structure
 
 ```
 PLAN.md              source verification findings + decisions
 sources.csv           name, url, method, license, languages, status, notes
 data/raw/             cached raw API responses, one subfolder per source, never modified
-data/processed/       cleaned.jsonl, dropped.jsonl, train/valid/test.jsonl (+ per-language-pair files)
+data/processed/       cleaned.jsonl, dropped.jsonl, train/valid/test.jsonl (+ per-language-pair files), train_ready.jsonl
 data/processed/gold_test/  empty, for manually-added real sermon sentences (never used in training)
 data/raw/haramain_khutab/  empty, for manually-added sermon audio/text (not scraped)
 src/                  pipeline scripts
@@ -125,3 +133,20 @@ in `requirements.txt`.
   included in `cleaned.jsonl` -- its Arabic column is tafsir commentary,
   not Quran verse text, and its license is non-commercial-only. See
   PLAN.md section 8.2.
+
+## Training prep
+
+```bash
+make prepare-for-training   # writes data/processed/train_ready.jsonl
+                              # (downloads only the NLLB tokenizer, a few MB)
+```
+
+`prepare_for_training.py` reads `data/processed/train.jsonl` (never
+`cleaned.jsonl` itself, which stays the canonical untruncated record) and
+applies a length rule targeting ~128 NLLB tokens/side: pairs already
+within budget are kept as-is; pairs that can be cleanly split into an
+equal number of sentences on both sides (each within budget) are split
+into multiple rows sharing the original `ref`; everything else is
+truncated to 128 tokens. Every output row is tagged `"prep":
+"as_is"|"split"|"truncated"`. See `reports/data_report.md`'s hadith
+word-count percentile table and the script's own log for exact counts.

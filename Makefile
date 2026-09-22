@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: download-quran download-hadith download-hadeethenc download-opus download-phase1 clean split report phase1 all
+.PHONY: download-quran download-hadith download-hadeethenc download-opus download-phase1 clean split report phase1 all prepare-for-training
 
 download-quran:
 	$(PYTHON) src/download_quran.py
@@ -29,6 +29,10 @@ report:
 phase1: download-phase1 clean split report
 
 all: phase1
+
+# Training prep -- downloads only the NLLB tokenizer, a few MB.
+prepare-for-training:
+	$(PYTHON) src/prepare_for_training.py
 
 # Phase 2 is scaffolding only -- these targets are NOT wired to run
 # automatically. See PLAN.md; do not invoke without separate approval and

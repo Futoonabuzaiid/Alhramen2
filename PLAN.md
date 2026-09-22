@@ -688,3 +688,62 @@ formal religious-register text considered later.
 No downloader was written for either corpus this pass (TED2020 excluded
 on license grounds, bible-uedin out of requested scope).
 
+
+### 8.12 Hadith length analysis + src/prepare_for_training.py
+
+**Word-count percentiles** (whitespace-split, on the `ar` field, one row
+per hadith-language pair -- see `reports/data_report.md` for the full
+table):
+
+| source | n | p50 | p90 | p99 | max |
+|---|---:|---:|---:|---:|---:|
+| fawazahmed0_hadith-api | 160,274 | 57 | 120 | 270 | 1,921 |
+| hadeethenc | 10,748 | 38 | 98 | 311 | 1,817 |
+| **all hadith** | 171,022 | 56 | 119 | 273 | 1,921 |
+
+Median hadith length is modest (~56-57 words), but the tail is long:
+p99 already exceeds 270 words, and a handful of outliers (full isnad
+chains -- the chain of narrators, which can run to dozens of names) reach
+nearly 2,000 words on both sources.
+
+**src/prepare_for_training.py**: applies a length rule targeting ~128
+NLLB tokens/side (counted with the real `facebook/nllb-200-distilled-
+600M` tokenizer -- downloads only the tokenizer files, a few MB, not the
+model). Reads `data/processed/train.jsonl`, writes
+`data/processed/train_ready.jsonl`; does not touch `cleaned.jsonl` or
+`train.jsonl`. Rule: pairs already within budget on both sides are kept
+as-is; pairs where both sides split into the same number of sentences
+(on `[.!?؟۔]` boundaries) with every resulting segment within budget are
+split into multiple rows sharing the original `ref`; everything else is
+truncated to 128 tokens (decoded back to text -- lossy).
+
+**Run on the full `train.jsonl` (192,063 pairs)**:
+
+| category | pairs | % |
+|---|---:|---:|
+| as_is | 120,044 | 62.5% |
+| split | 208 | 0.1% |
+| truncated | 71,811 | 37.4% |
+
+Output file: 192,527 rows (the 208 split pairs expand into ~672 sentence-
+level rows, net +464).
+
+**Two findings worth flagging, not just the numbers**:
+1. **Truncation is common** -- over a third of training pairs lose text
+   at the 128-token boundary. This tracks directly with the percentile
+   table above: p90 is already ~119-120 words, which for Arabic
+   (diacritics-stripped, still multi-byte subword-heavy under NLLB's
+   tokenizer) commonly exceeds 128 subword tokens. If less lossy training
+   data matters more than a strict 128-token budget, the fix is either a
+   larger `MAX_TOKENS` or accepting the truncation -- this wasn't decided
+   unilaterally; flagging it for you to weigh.
+2. **The clean-split path almost never fires** (0.1%). Hadith and
+   HadeethEnc text is largely single flowing sentences without symmetric
+   sentence-count boundaries across languages (a translator may render
+   one Arabic sentence as two in English, or vice versa), so the
+   conservative "only split when both sides agree exactly" rule mostly
+   falls through to truncation instead. This was a deliberate choice
+   (an incorrect split would corrupt far more pairs than truncation does)
+   but means the split path is doing very little practical work on this
+   dataset -- worth knowing if you're deciding whether it's worth keeping
+   at all versus simplifying to as_is/truncated only.
