@@ -16,6 +16,7 @@ CLEANED = PROJECT_ROOT / "data/processed/cleaned.jsonl"
 DROPPED = PROJECT_ROOT / "data/processed/dropped.jsonl"
 REPORTS_DIR = PROJECT_ROOT / "reports"
 SAMPLES_DIR = REPORTS_DIR / "samples"
+BASELINE_BLEU_JSON = REPORTS_DIR / "baseline_bleu_results.json"
 SEED = 20260101
 
 
@@ -97,6 +98,28 @@ def main():
     lines.append("See `src/prepare_for_training.py` for the actual NLLB-tokenizer-based length rule "
                   "(targets ~128 tokens, not words) applied on top of this data; its own report covers "
                   "how many pairs were split/truncated/left as-is.")
+
+    # --- baseline BLEU (from src/baseline_bleu.py, if it's been run) ---
+    if BASELINE_BLEU_JSON.exists():
+        bb = json.loads(BASELINE_BLEU_JSON.read_text(encoding="utf-8"))
+        lines.append("")
+        lines.append("## Baseline BLEU")
+        lines.append("")
+        mode = "full valid split" if not bb["max_examples"] else f"domain-stratified sample, seed={bb['seed']}"
+        lines.append(f"`facebook/nllb-200-distilled-600M`, zero-shot (no fine-tuning). "
+                      f"max_examples={bb['max_examples'] or 'full split'} ({mode}), "
+                      f"batch_size={bb['batch_size']}. Raw results: `reports/baseline_bleu_results.json`.")
+        lines.append("")
+        lines.append("| ar -> tgt | n | of full valid split | sacreBLEU | seconds |")
+        lines.append("|---|---:|---:|---:|---:|")
+        for lang, r in bb["languages"].items():
+            lines.append(f"| ar-{lang} | {r['n']} | {r['n_full_valid_split']} | {r['bleu']:.2f} | {r['seconds']:.0f} |")
+        lines.append("")
+        lines.append("| ar -> tgt | domain | n | sacreBLEU |")
+        lines.append("|---|---|---:|---:|")
+        for lang, r in bb["languages"].items():
+            for domain, d in sorted(r["by_domain"].items()):
+                lines.append(f"| ar-{lang} | {domain} | {d['n']} | {d['bleu']:.2f} |")
 
     # --- dropped items summary ---
     drop_by_reason = defaultdict(int)

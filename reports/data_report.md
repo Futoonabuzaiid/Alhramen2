@@ -34,6 +34,31 @@ Word counts (whitespace-split, not tokenizer counts) on the `ar` field, one row 
 
 See `src/prepare_for_training.py` for the actual NLLB-tokenizer-based length rule (targets ~128 tokens, not words) applied on top of this data; its own report covers how many pairs were split/truncated/left as-is.
 
+## Baseline BLEU
+
+`facebook/nllb-200-distilled-600M`, zero-shot (no fine-tuning). max_examples=400 (domain-stratified sample, seed=20260101), batch_size=8. Raw results: `reports/baseline_bleu_results.json`.
+
+| ar -> tgt | n | of full valid split | sacreBLEU | seconds |
+|---|---:|---:|---:|---:|
+| ar-en | 400 | 2255 | 6.44 | 3023 |
+| ar-fr | 400 | 2041 | 5.54 | 3286 |
+| ar-id | 400 | 2334 | 2.41 | 1618 |
+| ar-ur | 400 | 2139 | 9.27 | 3817 |
+| ar-tr | 400 | 2218 | 1.02 | 3467 |
+
+| ar -> tgt | domain | n | sacreBLEU |
+|---|---|---:|---:|
+| ar-en | hadith | 347 | 6.50 |
+| ar-en | quran | 53 | 4.93 |
+| ar-fr | hadith | 337 | 5.41 |
+| ar-fr | quran | 63 | 7.91 |
+| ar-id | hadith | 290 | 2.14 |
+| ar-id | quran | 110 | 5.70 |
+| ar-ur | hadith | 341 | 9.42 |
+| ar-ur | quran | 59 | 6.11 |
+| ar-tr | hadith | 288 | 0.88 |
+| ar-tr | quran | 112 | 3.28 |
+
 ## Dropped items by reason
 
 | reason | count |

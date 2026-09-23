@@ -1,0 +1,418 @@
+{
+  "max_examples": 400,
+  "seed": 20260101,
+  "batch_size": 8,
+  "model": "facebook/nllb-200-distilled-600M",
+  "languages": {
+    "en": {
+      "n": 400,
+      "n_full_valid_split": 2255,
+      "domain_counts_sampled": {
+        "hadith": 347,
+        "quran": 53
+      },
+      "bleu": 6.441762245316253,
+      "seconds": 3022.8548934459686,
+      "by_domain": {
+        "hadith": {
+          "n": 347,
+          "bleu": 6.50157493626195
+        },
+        "quran": {
+          "n": 53,
+          "bleu": 4.928887109252673
+        }
+      },
+      "sample_translations": [
+        {
+          "ar": "قال عروة ولقد حدثتني عائشة، زوج النبي صلى الله عليه وسلم ان رسول الله صلى الله عليه وسلم كان يصلي العصر والشمس في حجرتها قبل ان تظهر ‏.‏",
+          "domain": "hadith",
+          "hyp": "Aura said, and Aisha, the Prophet's husband, told me that the Prophet used to pray the evening and the sun in her room before she appeared.",
+          "ref": "Urwah (also) said:'A'isha?, the wife of the Apostle (ﷺ) narrated it to me that the Messenger of Allah (ﷺ) used to say the afternoon prayer, when the light of the sun was there in her apartment before it went out (of it)"
+        },
+        {
+          "ar": "عن ابي قتادة رضي الله عنه : «ان النبي صلى الله عليه وسلم كان يقرا في الظهر في الاوليين بام الكتاب، وسورتين، وفي الركعتين الاخريين بام الكتاب ويسمعنا الاية، ويطول في الركعة الاولى ما لا يطول في الركعة الثانية، وهكذا في العصر وهكذا في الصبح».",
+          "domain": "hadith",
+          "hyp": "About Abhi Qatada Raza Allah: The Prophet (peace and blessings of Allah be upon him) used to recite the Qur'an in the afternoon in the first two verses, and the two surahs, and in the other two verses, and we heard the verse, and the first verse was longer than the second verse, and so on at noon and so on in the morning.",
+          "ref": "Abu Qatādah (may Allah be pleased with him) reported: The Prophet (may Allah's peace and blessings be upon him) used to recite Al-Fātihah followed by another Sūrah in the first two Rak‘āhs of the Zhuhr prayer and used to recite only Al-Fātihah in the last two Rak‘āhs of it. Sometimes a verse or so was audible. He used to prolong the first Rak‘ah more than the second and used to do the same in the ‘Asr and Fajr prayers."
+        },
+        {
+          "ar": "حدثنا قتيبة بن سعيد، قال حدثنا اسماعيل، عن ايوب، عن محمد، عن ام عطية، قالت كنا لا نعد الكدرة والصفرة شيئا‏.‏",
+          "domain": "hadith",
+          "hyp": "We were told by Qatimah bin Said, who told us about Ismail, about Job, about Muhammad, about Amr Atiya, she said we were counting nothing on the al-Qadr and the al-Zirr.",
+          "ref": "Narrated Um `Atiya:We never considered yellowish discharge as a thing of importance (as menses)"
+        },
+        {
+          "ar": "حدثنا هشام بن عمار، ومحمد بن الصباح، قالا حدثنا سفيان بن عيينة، عن الزهري، عن سالم، عن ابيه، حدثني زيد بن ثابت، ان رسول الله  صلى الله عليه وسلم  رخص في العرايا ‏.‏",
+          "domain": "hadith",
+          "hyp": "We were told by Hisham bin Omar, and by Muhammad bin Sabah, they were told by Sufiyan bin Aynah, about Al-Zahri, about Salem, about Abi, told by Zayd bin Fatih, that the Prophet (peace be upon him) was permitted to go into the fields.",
+          "ref": "It was narrated from Salim from his father:\"Zaid bin Thabit narrated to me that the Messenger of Allah (ﷺ) gave a concession regarding the sale of 'Araya.”"
+        },
+        {
+          "ar": "حدثنا ايوب بن محمد الهاشمي، حدثنا عبد الواحد بن زياد، عن حجاج بن ارطاة، عن عون بن ابي جحيفة، عن ابيه، قال اتيت رسول الله  صلى الله عليه وسلم  بالابطح وهو في قبة حمراء فخرج بلال فاذن فاستدار في اذانه وجعل اصبعيه في اذنيه ‏.‏",
+          "domain": "hadith",
+          "hyp": "We were told by Job bin Muhammad Al-Hashmi, we were told by Abd al-Wahid bin Zayd, about Hajj bin Artaat, about A'un bin Abi Jahif, about his father, said Atit the Messenger of Allah (peace be upon him) in a red dome, and he turned to the face of the face and put his fingers in his ears.",
+          "ref": "It was narrated from 'Awn bin Abu Juhaifah that his father said:\"I came to the Messenger of Allah in Abtah, when he was in a red tent. Bilal came out and gave the call to prayer, turning around and putting his fingers in his ears"
+        },
+        {
+          "ar": "حدثنا قتيبة بن سعيد، حدثنا عبد العزيز، - يعني ابن محمد - عن العلاء، عن ابيه، عن ابي هريرة، ان رسول الله صلى الله عليه وسلم قال ‏ \"‏ لا تهجروا ولا تدابروا ولا تحسسوا ولا يبع بعضكم على بيع بعض وكونوا عباد الله اخوانا ‏\"‏ ‏.‏",
+          "domain": "hadith",
+          "hyp": "We were told by Qatib ibn Said, we were told by Abd al-Aziz, - that is, son of Muhammad - about the A'la, about his father, about Abi Harira, that the Prophet said, \"Do not desert, do not be discouraged, do not be greedy, do not sell each other to sell each other and be servants of Allah, brothers and sisters\".",
+          "ref": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Don't have estranged relations (with the others) and don't nurse enmity and don't enter into a transaction when the other (has already entered) and be fellow-brothers and servants of Allah"
+        },
+        {
+          "ar": "اخبرنا الربيع بن سليمان، قال حدثنا شعيب بن الليث، قال حدثنا الليث، عن ابن عجلان، عن القعقاع، عن ابي صالح، عن ابي هريرة، عن رسول الله صلى الله عليه وسلم قال ‏ \"‏ لا يزني الزاني حين يزني وهو مؤمن ولا يسرق السارق حين يسرق وهو مؤمن ولا يشرب الخمر حين يشربها وهو مؤمن ولا ينتهب نهبة ذات شرف يرفع الناس اليها ابصارهم وهو مؤمن ‏\"‏ ‏.‏",
+          "domain": "hadith",
+          "hyp": "We are told by the spring, son of Solomon, said Sha'ib bin Lith, said by Lith, about Ibn Azlan, about Qaqqa, about Abi Saleh, about Abi Harira, about the Prophet of Allah, said, \"The adulterer shall not commit adultery while he is a believer, nor the thief steal while he is a believer, nor drink wine when he is a believer, nor take a noble pillage, to which he raises his eyes while he is a believer\".",
+          "ref": "It was narrated from abu Hurairah that the Messenger of Allah said:\"No one who commits Zina is a believer at the moment when he is committing Zina; no one who steals is a believe at the moment when he is stealing; no one who drinks wine is a believer at the moment when he is drinking it; and no robber is a believer at the moment when he is robbing and the people are looking on"
+        },
+        {
+          "ar": "حدثنا عبد الله بن عبد الوهاب، حدثنا خالد بن الحارث، حدثنا شعبة، عن واقد بن محمد بن زيد، سمعت ابي، عن ابن عمر  رضى الله عنهما  عن النبي صلى الله عليه وسلم قال ‏ \"‏ ويلكم  او ويحكم قال شعبة شك هو  لا ترجعوا بعدي كفارا، يضرب بعضكم رقاب بعض ‏\"‏‏.‏ وقال النضر عن شعبة ويحكم‏.‏ وقال عمر بن محمد عن ابيه ويلكم او ويحكم‏.‏",
+          "domain": "hadith",
+          "hyp": "We were told by Abdullah bin Abdul Wahhab, we were told by Khalid bin Harath, we were told by Abu Dhabi, about Qawd bin Muhammad bin Zayed, I was told by Abu Dhabi, about Ibn Omar, about the Prophet Muhammad (peace be upon him) said, \"Welcome or we will judge\", said Abu Dhabi, doubt is not coming back after me, infidelity is hitting each other.",
+          "ref": "Narrated Ibn `Umar:The Prophet (ﷺ) said, \"Wailakum\" (woe to you) or \"waihakum\" (May Allah be merciful to you).\" Shu`ba is not sure as to which was the right word. \"Do not become disbelievers after me by cutting the necks of one another"
+        },
+        {
+          "ar": "ولا يحسبن ٱلذين كفروا سبقوا انهم لا يعجزون",
+          "domain": "quran",
+          "hyp": "And do not think that the unbelievers who have already been disbelievers cannot do so.",
+          "ref": "And let not those who disbelieve think that they can outstrip (escape from the punishment). Verily, they will never be able to save themselves (from Allah's Punishment)"
+        },
+        {
+          "ar": "قال فما خطبكم ايها ٱلمرسلون",
+          "domain": "quran",
+          "hyp": "He said, \"What's wrong with you messengers?",
+          "ref": "Ibrahim (Abraham) again] said: \"What then is the business on which you have come, O Messengers"
+        }
+      ]
+    },
+    "fr": {
+      "n": 400,
+      "n_full_valid_split": 2041,
+      "domain_counts_sampled": {
+        "hadith": 337,
+        "quran": 63
+      },
+      "bleu": 5.537968977834462,
+      "seconds": 3285.8301062583923,
+      "by_domain": {
+        "hadith": {
+          "n": 337,
+          "bleu": 5.408711533828555
+        },
+        "quran": {
+          "n": 63,
+          "bleu": 7.9143427443649195
+        }
+      },
+      "sample_translations": [
+        {
+          "ar": "حدثني عثمان بن ابي شيبة، حدثنا عبدة، عن هشام، عن ابيه، عن عائشة  رضى الله عنها  قالت استاذن حسان النبي صلى الله عليه وسلم في هجاء المشركين، قال ‏ \"‏ كيف بنسبي ‏\"‏‏.‏ فقال حسان لاسلنك منهم كما تسل الشعرة من العجين‏.‏ وعن ابيه قال ذهبت اسب حسان عند عائشة فقالت لا تسبه فانه كان ينافح عن النبي صلى الله عليه وسلم‏.‏",
+          "domain": "hadith",
+          "hyp": "Osman ibn Abi Shaba m'a raconté, nous avons parlé d'Abda, d'Hisham, de son père, d'Aisha, qui a été agréée par Allah. Elle a dit: \" Maître Hassan, le prophète, dans la forêt des mécréants, a dit: \" Comment en proportion de moi \" .",
+          "ref": "Rapporté par `Aisha : Un jour, Hassan bin Thabit a demandé la permission au Prophète (ﷺ) de composer des poèmes satiriques contre les infidèles. Le Prophète (ﷺ) a dit : « Mais j'ai des liens de parenté avec eux. » Hassan a répondu : « Je te distinguerai d'eux comme on retire un cheveu de la pâte. » Rapporté par `Urwa : J'ai commencé à critiquer Hassan devant `Aisha, alors elle a dit : « Ne le critique pas, car il défendait le Prophète avec sa poésie. »"
+        },
+        {
+          "ar": "عن عائشة قالت: كان النبي صلى الله عليه وسلم يقول وهو صحيح: «انه لم يقبض نبي حتى يرى مقعده من الجنة، ثم يخير» فلما نزل به، وراسه على فخذي غشي عليه، ثم افاق فاشخص بصره الى سقف البيت، ثم قال: «اللهم الرفيق الاعلى». فقلت: اذا لا يختارنا، وعرفت انه الحديث الذي كان يحدثنا وهو صحيح، قالت: فكانت اخر كلمة تكلم بها: «اللهم الرفيق الاعلى».",
+          "domain": "hadith",
+          "hyp": "Ayisha a dit: \" Si le Prophète (que la prière d'Allah et Son salut soient sur lui) avait dit vrai: \" Il n'a pas arrêté le Prophète avant de voir son siège au paradis, puis il a été guéri quand il est descendu, la tête sur la cheville, il l'a couverte, puis il a horizontalement regardé le toit de la maison, puis il a dit: \" Allah le Très Haut \".",
+          "ref": "ʽÂ'ishah (qu'Allah l'agrée) relate : « Le Prophète (sur lui la paix et le salut) disait, alors qu'il était en bonne santé : \"Aucun Prophète n'est mort sans que ne lui soit montrée sa place au Paradis et qu'ensuite le choix ne lui soit donné.\" Lorsque la mort est venue à lui et que sa tête était sur ma cuisse, il s'est évanoui. Ensuite, il reprit conscience et leva alors son regard en direction du toit de la maison. Puis, il a dit : \"Ô Allah ! La compagnie la plus élevée !\" J'ai dit : \"Ainsi, il ne nous choisit pas !\" Et j'ai alors su qu'il s'agissait du récit qu'il nous racontait lorsqu'il était en bonne santé.\" » Elle a dit : « La dernière parole qu'il a prononcée fut : \"Ô Allah ! La compagnie la plus élevée !\" »"
+        },
+        {
+          "ar": "حدثنا مسدد، حدثنا يحيى بن سعيد، وحدثنا اسماعيل، عن هشام، وحدثنا عثمان بن ابي شيبة، حدثنا يعلى بن عبيد، حدثنا حجاج الصواف، جميعا عن يحيى بن ابي كثير، عن عكرمة، عن ابن عباس، قال قضى رسول الله صلى الله عليه وسلم في دية المكاتب يقتل يودى ما ادى من مكاتبته دية الحر وما بقي دية المملوك ‏.‏",
+          "domain": "hadith",
+          "hyp": "Nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous avons eu un incident, nous",
+          "ref": "Rapporté par Abdullah ibn Abbas رضي الله عنه : Le Messager d’Allah ﷺ a jugé au sujet de l’esclave qui avait conclu un contrat pour acheter sa liberté (mukatab) et qui avait été tué, que le prix du sang devait être payé comme pour un homme libre, selon ce qu’il avait déjà payé, et comme pour un esclave pour le reste"
+        },
+        {
+          "ar": "حدثنا عثمان بن ابي شيبة، والحسن بن علي، ان زيد بن الحباب، حدثهم حدثنا سيف المكي، - قال عثمان سيف بن سليمان - عن قيس بن سعد، عن عمرو بن دينار، عن ابن عباس، ان رسول الله صلى الله عليه وسلم قضى بيمين وشاهد ‏.‏",
+          "domain": "hadith",
+          "hyp": "Nous avons été informés par Ousmane ben Abi Sheba, et Hasan ben Ali, en particulier par Zayed ben Al-Habab, leur histoire nous a été rapportée par le Sef al-Maki, - a déclaré Ousmane Sef ben Suleiman - de Qis ben Saad, d'Ommro ben Dinar, d'Ibn Abbas, que le Messager de Dieu a passé la nuit en confiance et en témoin.",
+          "ref": "Ibn Abbas رضي الله عنه a dit : Le Messager d’Allah ﷺ a rendu un jugement sur la base d’un serment et d’un seul témoin"
+        },
+        {
+          "ar": "وقال عطاء عن ابن عباس، كانت قريبة بنت ابي امية عند عمر بن الخطاب فطلقها، فتزوجها معاوية بن ابي سفيان، وكانت ام الحكم ابنة ابي سفيان تحت عياض بن غنم الفهري فطلقها، فتزوجها عبد الله بن عثمان الثقفي‏.‏",
+          "domain": "hadith",
+          "hyp": "Atta, a dit à son sujet, était une cousine de la fille d'Abi Amaya lorsque Omar Ben Al-Khattab l'a divorcée, et elle a épousé Maawia Ben Abi Sufiyan, et la mère du souverain était la fille d'Abi Sufiyan sous l'égide d'Ayyaz Ben Gham Al-Fahri, qui l'a divorcée, et elle a épousé Abdullah Ben Osman Cultural.",
+          "ref": "Rapporté par Ibn 'Abbas : Qariba, la fille d'Abi Umaiyya, était l'épouse de 'Umar ibn Al-Khattab. 'Umar l'a divorcée, puis Mu'awiyya ibn Abi Sufyan l'a épousée. De même, Umm Al-Hakam, la fille d'Abi Sufyan, était l'épouse de 'Iyad ibn Ghanm Al-Fihri. Il l'a divorcée, puis 'Abdullah ibn 'Uthman Al-Thaqafi l'a épousée"
+        },
+        {
+          "ar": "وحدثنا ابو بكر بن ابي شيبة، وسريج بن يونس، - واللفظ لابي بكر - قالا حدثنا مروان بن معاوية، عن منصور بن حيان، عن سعيد بن جبير، قال اشهد على ابن عمر وابن عباس انهما شهدا ان رسول الله صلى الله عليه وسلم نهى عن الدباء والحنتم والمزفت والنقير ‏.‏",
+          "domain": "hadith",
+          "hyp": "Nous avons parlé d'Abu Bakr ben Abi Sheba, de Srijh ben Yunus, - et le mot Labi Bakr - nous avons parlé de Marwan ben Maawia, de Mansour ben Hayyan, de Said ben Jabir, a déclaré un témoin sur Ibn Omar et Ibn Abbas, qui ont témoigné que le Prophète (que la prière et la paix d'Allah soient sur lui) avait interdit la mécréance, le haine, la mécréance et le pureté.",
+          "ref": "Rapporté par Saïd b. Jubair : J’atteste qu’Ibn ‘Umar et Ibn Abbas رضي الله عنهما ont témoigné que le Messager d’Allah ﷺ a interdit de préparer le nabidh dans des calebasses, des récipients enduits de poix et des troncs évidés"
+        },
+        {
+          "ar": "حدثنا مسلم، قال حدثنا وهيب، حدثنا منصور، عن امه، عن عائشة، ان امراة، من الانصار قالت للنبي صلى الله عليه وسلم كيف اغتسل من المحيض قال ‏\"‏ خذي فرصة ممسكة، فتوضئي ثلاثا ‏\"‏‏.‏ ثم ان النبي صلى الله عليه وسلم استحيا فاعرض بوجهه او قال ‏\"‏ توضئي بها ‏\"‏ فاخذتها فجذبتها فاخبرتها بما يريد النبي صلى الله عليه وسلم‏.‏",
+          "domain": "hadith",
+          "hyp": "Il nous a dit que nous étions musulmans, il nous a dit que nous étions hébreux, il nous a parlé de Mansour, de sa mère, d'Aisha, d'une princesse de l'Ansar qui a dit au prophète comment se laver de l'hiver: \" Prends une occasion, fais-moi trois \" .",
+          "ref": "Rapporté par `Aisha : Une femme des Ansar a demandé au Prophète (ﷺ) comment faire le bain après la fin des règles. Il a répondu : « Prends un morceau de tissu parfumé au musc et nettoie tes parties intimes avec trois fois. » Le Prophète (ﷺ) était gêné et a détourné le visage. Alors je l’ai tirée vers moi et je lui ai expliqué ce que le Prophète (ﷺ) voulait dire"
+        },
+        {
+          "ar": "حدثنا ابو بكر بن ابي شيبة، حدثنا ابو معاوية، عن الاعمش، عن مسلم، عن مسروق، عن عائشة، قالت خيرنا رسول الله  صلى الله عليه وسلم  فاخترناه ‏.‏ فلم نره شيئا ‏.‏",
+          "domain": "hadith",
+          "hyp": "Nous avons parlé d'Abu Bakr ben Abi Sheba, d'Abu Maawia, des amis, des musulmans, des voleurs, d'Aisha, elle a dit: \"Nous avons choisi le Messager d'Allah et nous n'avons rien laissé.",
+          "ref": "Rapporté par Aïcha : Le Messager d'Allah nous a donné le choix, et nous l'avons choisi, et il n'a pas considéré cela comme quelque chose (c'est-à-dire un divorce effectif)"
+        },
+        {
+          "ar": "عن عمرو بن شعيب، عن ابيه، عن جده، قال: قضى رسول الله صلى الله عليه وسلم في رجل طعن رجلا بقرن في رجله، فقال: يا رسول الله، اقدني، فقال له رسول الله صلى الله عليه وسلم : \"لا تعجل حتى يبرا جرحك\"، قال: فابى الرجل الا ان يستقيد، فاقاده رسول الله صلى الله عليه وسلم منه، قال: فعرج المستقيد، وبرا المستقاد منه، فاتى المستقيد الى رسول الله صلى الله عليه وسلم ، فقال له: يا رسول الله، عرجت، وبرا صاحبي؟ فقال له رسول الله صلى الله عليه وسلم : \"الم امرك الا تستقيد، حتى يبرا جرحك؟ فعصيتني فابعدك الله، وبطل جرحك\" ثم امر رسول الله -صلى الله عليه وسلم، بعد الرجل الذي عرج- من كان به جرح ان لا يستقيد حتى تبرا جراحته، فاذا برئت جراحته استقاد.",
+          "domain": "hadith",
+          "hyp": "Omar ibn Shoaib, sur son père, sur son grand-père, a dit: \"Le Prophète (que la prière d'Allah et sa paix soient sur lui) a tué un homme qui avait été blessé par un homme qui avait un gros coup dans le talon. Il a dit: \"O Messager d'Allah, je te prie, ne te hâte pas avant de guérir ta plaie\". Il a dit: \"Fabi, l'homme ne doit pas se faire guérir, il a été guéri\".",
+          "ref": "‘Amr ibn Shu'ayb relate, d’après son père, d’après son grand-père : « Le Messager d’Allah (sur lui la paix et le salut) a jugé le cas d’un homme qui, à l’aide d’une corne, avait planté un [autre] homme dans son pied. Ce dernier dit alors : \"Ô Messager d’Allah ! Applique le talion en ma faveur !\" Mais, le Messager d’Allah (sur lui la paix et le salut) répondit : \"Ne t’empresse pas jusqu’à ce que ta blessure guérisse !\" » [Le rapporteur du hadith] dit : « L’homme refusa, il ne faisait que demander l’application du talion. Alors, le Messager d’Allah (sur lui la paix et le salut) appliqua le talion en sa faveur. Mais, celui qui avait demandé l’application du talion devint boiteux tandis que celui à qui l’on avait appliqué le talion finit par guérir. Alors, celui qui avait demandé l’application du talion se rendit auprès du Messager d’Allah (sur lui la paix et le salut) et lui dit : \"Ô Messager d’Allah ! Je suis devenu boiteux tandis que mon compagnon a guéri ! - Le Messager d’Allah (sur lui la paix et le salut) lui dit : Ne t’avais-je pas ordonné de ne pas demander l’application du talion jusqu’à ce que ta blessure ne guérisse ? Mais tu m’as désobéi, Allah t’a éloigné et maintenant ta blessure est devenue handicapante !\" Ensuite, le Messager d’Allah (sur lui la paix et le salut) ordonna d’éloigner l’homme qui était devenu boiteux et [qu’à l’avenir] quiconque serait blessé ne devait pas demander l’application du talion jusqu’à ce que sa blessure guérisse. Et qu’une fois celle-ci guérie, à ce moment-là, il pouvait demander l’application du talion. »"
+        },
+        {
+          "ar": "عن ابي هريرة وابي قتادة وابي ابراهيم الاشهلي عن ابيه -وابوه صحابي- رضي الله عنهم عن النبي صلى الله عليه وسلم انه صلى على جنازة، فقال: «اللهم اغفر لحينا وميتنا، وصغيرنا وكبيرنا، وذكرنا وانثانا، وشاهدنا وغائبنا، اللهم من احييته منا فاحيه على الاسلام، ومن توفيته منا فتوفه على الايمان، اللهم لا تحرمنا اجره، ولا تفتنا بعده».",
+          "domain": "hadith",
+          "hyp": "Sur Abbi Harira, Abbi Kadada, Abbi Ibrahim Al-Shahli, Abbi Ibrahim Al-Shabaab, Allah le bénit, le prophète a prié pour un enterrement et a dit: \"Allah nous pardonne nos vies et nos morts, nos petits et grands, nos souvenirs et nos femmes, nos témoins et nos morts, Allah nous a ressuscités pour l'Islam, et celui qui est mort pour nous est mort en croyant, Allah ne nous a pas interdit de le payer, ni de le revenir. \"",
+          "ref": "Abû Hurayrah, Abû Qatâdah et Abû Ibrâhîm Al-Ash’halî d’après son père - et son père était un Compagnon (qu’Allah les agrée) - relatent que le Prophète (sur lui la paix et le salut) a accomplit la prière mortuaire et dit : « Ô Allah ! Pardonne à ceux parmi nous qui sont encore vivants ainsi qu'à nos morts, à nos jeunes ainsi qu'à nos personnes âgées, à nos hommes ainsi qu'à nos femmes, aux personnes présentes ainsi qu'à celles qui sont absentes. Ô Allah ! Celui d’entre nous que Tu maintiens en vie, alors fais-le vivre conformément à l’Islam, et celui d’entre nous dont Tu reprends l’âme, alors fais-le mourir dans la foi. Ô Allah ! Ne nous prive pas de sa récompense et ne nous tente pas après lui ! »"
+        }
+      ]
+    },
+    "id": {
+      "n": 400,
+      "n_full_valid_split": 2334,
+      "domain_counts_sampled": {
+        "hadith": 290,
+        "quran": 110
+      },
+      "bleu": 2.410683303087936,
+      "seconds": 1618.0117993354797,
+      "by_domain": {
+        "hadith": {
+          "n": 290,
+          "bleu": 2.139586363596219
+        },
+        "quran": {
+          "n": 110,
+          "bleu": 5.697769490406234
+        }
+      },
+      "sample_translations": [
+        {
+          "ar": "حدثنا محمد بن رمح، انبانا الليث بن سعد، عن نافع، عن عبد الله بن عمر، قال نهى رسول الله  صلى الله عليه وسلم  عن المزابنة ‏.‏ والمزابنة ان يبيع الرجل تمر حائطه ان كانت نخلا بتمر كيلا وان كانت كرما ان يبيعه بزبيب كيلا وان كانت زرعا ان يبيعه بكيل طعام نهى عن ذلك كله ‏.‏",
+          "domain": "hadith",
+          "hyp": "Muhammad bin Rah, Anbana Lith bin Sa'ad, menceritakan tentang Nafa, tentang Abdullah bin Umar, mengatakan bahwa Rasulullah SAW melarang wanita berjilbab . Dan wanita berjilbab menjual pria yang melewati temboknya jika dia memiliki fir dengan biji-bijian kelapa dan jika dia adalah seorang pekerja untuk menjual dengan biji-bijian kelapa dan jika dia adalah seorang petani untuk menjual dengan biji-bijian makanan melarang semua itu .",
+          "ref": "Telah menceritakan kepada kami [Muhammad bin Rumh] berkata, telah memberitakan kepada kami [Al Laits bin Sa'd] dari [Nafi'] dari [Abdullah bin Umar] ia berkata, \"Rasulullah shallallahu 'alaihi wasallam melarang jual beli dengan sistem Muzabanah. Muzabanah adalah, seseorang menjual buah yang masih ada dikebun jika itu berupa kurma, dengan kurma dalam takaran. Jika itu berupa anggur, maka ia menjualnya dengan anggur kering dalam takaran. Dan jika itu berupa tanaman, maka ia menjualnya dengan makanan dalam takaran. Dan beliau melarang dari semua itu"
+        },
+        {
+          "ar": "حدثنا قتيبة بن سعيد، حدثنا عبد العزيز، - يعني ابن محمد - عن العلاء، عن ابيه، عن ابي هريرة، ان رسول الله صلى الله عليه وسلم قال ‏ \"‏ لا تهجروا ولا تدابروا ولا تحسسوا ولا يبع بعضكم على بيع بعض وكونوا عباد الله اخوانا ‏\"‏ ‏.‏",
+          "domain": "hadith",
+          "hyp": "Kami diberitahu oleh Qatimah bin Said, kami diberitahu oleh Abdul Aziz, yaitu putra Muhammad, tentang Al-Alah, tentang ayahnya, tentang Abi Harira, bahwa Rasulullah SAW berkata, \"Janganlah kalian meninggalkan, jangan berburu, jangan berhasrat, jangan saling jual, dan menjadilah hamba-hamba Allah dan saudara-saudaramu\".",
+          "ref": "Telah menceritakan kepada kami [Qutaibah bin Sa'id]; Telah menceritakan kepada kami ['Abdul 'Aziz] yaitu Ibnu Muhammad dari [Al A'laa] dari [Bapaknya] dari [Abu Hurairah] bahwa Rasulullah shallallahu 'alaihi wasallam bersabda: \"Janganlah kalian saling mendiamkan, saling membelakangi, dan janganlah suka mencari-cari isu (meneropong kesalahan), serta (memusuhi)! Tetapi, jadilah kalian hamba-hamba Allah yang bersaudara"
+        },
+        {
+          "ar": "وحدثنا محمد بن ابي بكر، حدثنا يزيد بن زريع، حدثنا عزرة بن ثابت، عن ثمامة بن عبد الله بن انس، قال حج انس على رحل، ولم يكن شحيحا، وحدث ان رسول الله صلى الله عليه وسلم حج على رحل وكانت زاملته‏.‏",
+          "domain": "hadith",
+          "hyp": "Dan kami bertemu dengan Muhammad bin Abi Bakr, kami bertemu dengan Yazid bin Zrea, kami bertemu dengan Azra bin ثابت, kami bertemu dengan Thammah bin Abdullah bin Ins, mengatakan Hajj Ins adalah perjalanan, bukan syahi'ah, dan kami bertemu dengan Rasulullah bin Zrea, bahwa hajj adalah perjalanan dan istri-istri beliau.",
+          "ref": "Telah menceritakan kepada kami [Muhammad bin Abu Bakar] telah menceritakan kepada kami [Yazid bin Zurai'] telah menceritakan kepada kami ['Azrah bin Tsabit] dari [Tsumamah bin 'Abdullah bin Anas] berkata: \" [Anas] berhajji dengan menunggang kendaraannya dan ketika itu ia bukanlah seorang yang kikir. Ia juga menceritakan bahwa Rasulullah shallallahu 'alaihi wasallam berhaji mengendarai tunggangannya yang membawa perbekalannya"
+        },
+        {
+          "ar": "حدثني محمد بن المثنى، حدثنا غندر، حدثنا شعبة، عن عبد الملك، سمعت جابر بن سمرة، قال سمعت النبي صلى الله عليه وسلم يقول ‏ \"‏ يكون اثنا عشر اميرا  فقال كلمة لم اسمعها فقال ابي انه قال  كلهم من قريش ‏\"‏‏.‏",
+          "domain": "hadith",
+          "hyp": "Saya mendengar Muhammad bin al-Muthni, saya mendengar Gunder, saya mendengar Shaba, saya mendengar Jaber bin Samara, saya mendengar Nabi Muhammad SAW mengatakan \"jika ada dua belas amir, maka dia mengatakan sesuatu yang belum saya dengar, maka ayah saya berkata bahwa dia mengatakan semuanya dari Qureshi \" .",
+          "ref": "Telah menceritakan kepadaku [Muhammad bin Al Mutsanna] telah menceritakan kepada kami [Ghundar] telah menceritakan kepada kami [Syu'bah] dari [Abdul Malik], aku mendengar [Jabir bin Samurah] mengatakan, aku mendengar Nabi shallallahu 'alaihi wasallam bersabda; \"akan muncul dua belas pemimpin, \" kemudian beliau mengucapkan kalimat yang tidak dapat kami dengar, maka [ayahku] berkata; beliau mengatakan: \"Kesemuanya dari qurasy"
+        },
+        {
+          "ar": "عن جابر رضي الله عنه : ان رسول الله صلى الله عليه وسلم نهى ان ينتعل الرجل قائما.",
+          "domain": "hadith",
+          "hyp": "Tentang Jabir Rahman: bahwa Rasulullah SAW tidak mengizinkan seorang pria berdiri tegak.",
+          "ref": "Dari Jābir -raḍiyallāhu 'anhu- bahwa Rasulullah -ṣallallāhu 'alaihi wa sallam- melarang seseorang mengenakan sandal sambil berdiri.\""
+        },
+        {
+          "ar": "عن ابي هريرة رضي الله عنه قال: قال رسول الله صلى الله عليه وسلم: «ان الله يرضى لكم ثلاثا، ويكره لكم ثلاثا، فيرضى لكم: ان تعبدوه، ولا تشركوا به شيئا، وان تعتصموا بحبل الله جميعا ولا تفرقوا، ويكره لكم: قيل وقال، وكثرة السؤال، واضاعة المال».",
+          "domain": "hadith",
+          "hyp": "Abu Harira, seorang ulama yang sangat dikenal, mengatakan bahwa Rasulullah saw. bersabda: \"Jika Allah meremehkan tiga dari kalian, dan membenci tiga dari kalian, maka Dia meremehkan kalian: menyembah-Nya, dan tidak mempersekutukan apa pun, dan bersumpah-persembahkan dengan tali Allah, dan tidak memisahkan-Nya, maka Dia membenci kalian\".",
+          "ref": "Abu Hurairah -raḍiyallāhu 'anhu- meriwayatkan, Rasulullah ﷺ bersabda, \"Sungguh Allah meridai bagi kalian tiga perkara dan membenci bagi kalian tiga perkara. Allah rida bila kalian beribadah kepada-Nya, tidak menyekutukan-Nya dengan sesuatu pun, dan berpegang teguh dengan tali Allah seluruhnya dan tidak berpecah belah. Allah benci bagi kalian berdesas-desus (banyak bicara), banyak bertanya, dan menyia-nyiakan harta.\""
+        },
+        {
+          "ar": "اخبرنا زياد بن ايوب، قال حدثنا ابن علية، قال انبانا ايوب، عن نافع، عن ابن عمر، قال قال رجل يا رسول الله ما نقتل من الدواب اذا احرمنا قال ‏ \"‏ خمس لا جناح على من قتلهن الحداة والغراب والفارة والعقرب والكلب العقور ‏\"‏ ‏.‏",
+          "domain": "hadith",
+          "hyp": "Ziad bin Ayub memberitahu kita, dia berkata, \"Beritahu kami, bin Aliyah, Ibana Ayub, tentang Nafa, tentang bin Omar, dia berkata, seorang pria atau rasul Allah berkata, \"Kita tidak akan membunuh dari Dadab jika kita tidak boleh melakukannya\", dia berkata, \"Banyak lima orang tidak bersalah atas orang yang membunuh hadad, gagak, naga, kalajengking, dan anjing kalajengking\". ",
+          "ref": "Telah mengabarkan kepada kami [Ziyad bin Ayyub], ia berkata; telah menceritakan kepada kami [Ibnu 'Aliyah], ia berkata; telah memberitakan kepada kami [Ayyub] dari [Nafi'] dari [Ibnu Umar], ia berkata; terdapat seorang laki-laki yang berkata; wahai Rasulullah, binatang apakah yang boleh kami bunuh apabila kami berihram? Beliau menjawab: \"Lima hal yang tidak ada dosa bagi orang yang membunuhnya, yaitu; Burung Rajawali, Burung Gagak, Tikus, Kalajengking, dan Anjing buas"
+        },
+        {
+          "ar": "فاذا قضيتم ٱلصلوة فٱذكروا ٱلله قيم ا وقعود ا وعلى جنوبكم فاذا ٱطماننتم فاقيموا ٱلصلوة ان ٱلصلوة كانت على ٱلمومنين كتب ا موقوت ا",
+          "domain": "quran",
+          "hyp": "Jika Anda yakin bahwa doa itu adalah untuk orang-orang yang percaya.",
+          "ref": "Selanjutnya, apabila kamu telah menyelesaikan salat(mu), ingatlah Allah ketika kamu berdiri, pada waktu duduk dan ketika berbaring. Kemudian, apabila kamu telah merasa aman, maka laksanakanlah salat itu (sebagaimana biasa). Sungguh, salat itu adalah kewajiban yang ditentukan waktunya bagi orang-orang yang beriman"
+        },
+        {
+          "ar": "حدثنا محمد بن حاتم بن ميمون، حدثنا يحيى بن سعيد، حدثنا يزيد بن كيسان، عن ابي حازم الاشجعي، عن ابي هريرة، قال قال رسول الله صلى الله عليه وسلم لعمه ‏\"‏ قل لا اله الا الله اشهد لك بها يوم القيامة ‏\"‏ ‏.‏ قال لولا ان تعيرني قريش يقولون انما حمله على ذلك الجزع لاقررت بها عينك فانزل الله ‏{‏ انك لا تهدي من احببت ولكن الله يهدي من يشاء‏}‏",
+          "domain": "hadith",
+          "hyp": "Cerita Muhammad bin Hatam bin Mimon, cerita Yahya bin Said, cerita Yazid bin Kisan, tentang Abi Hazim al-Shu'ayyah, tentang Abi Harira, mengatakan bahwa Rasul Allah SAW berkata kepada sepupu-sepupu-nya, \" Katakanlah tidak kecuali Allah yang memperingatkanmu tentang hal itu di hari kiamat \" .",
+          "ref": "Telah menceritakan kepada kami [Muhammad bin Hatim bin Maimun] telah menceritakan kepada kami [Yahya bin Sa'id] telah menceritakan kepada kami [Yazid bin Kaisan] dari [Abu Hazim al-Asyja'i] dari [Abu Hurairah] dia berkata, \"Rasulullah shallallahu 'alaihi wasallam bersabda kepada pamannya ketika dia menjelang wafat: 'Katakanlah, 'Tidak ada tuhan (yang berhak disembah selian Allah' niscaya aku akan bersaksi untukmu dengan kalimat tersebut pada hari kiamat.' Dia menjawab, 'Kalau seandainya bukan karena kaum Quraisy mencelaku dengan perkataan mereka, 'Dia melakukan hal tersebut karena cemas', niscaya aku menyetujui kalimat tersebut dengan matamu.' Lalu Allah menurunkan: '(Sesungguhnya kamu tidak akan dapat memberi petunjuk kepada orang yang kamu kasihi akan tetapi aku memberi petunjuk kepada orang yang Dia kehendaki) ' (Qs. Al Qashash:)"
+        },
+        {
+          "ar": "اخبرنا قتيبة، عن مالك، عن نافع، عن ابراهيم بن عبد الله بن حنين، عن ابيه، عن علي، قال نهاني رسول الله صلى الله عليه وسلم عن لبس القسي والمعصفر وعن تختم الذهب وعن القراءة في الركوع ‏.‏",
+          "domain": "hadith",
+          "hyp": "Katakan kepada kami, Qatib, tentang Malik, tentang Nafa, tentang Ibrahim bin Abdullah bin Hnin, tentang Abiyah, tentang Ali, Nabi Muhammad SAW mengatakan bahwa Nabi Muhammad SAW memakai pakaian al-Qassi dan mas-Zalfi, dan tentang emas dan membaca di atas lutut.",
+          "ref": "Telah mengabarkan kepada kami [Qutaibah] dari [Malik] dari [Nafi'] dari [Ibrahim bin 'Abdullah bin Hunain] dari [bapaknya] dari ['Ali] dia berkata; \"Rasulullah Shallallahu'alaihi wasallam melarangku memakai pakaian sutra serta pakaian yang dicelup warna kuning, melarangku memakai cincin emas, dan melarangku membaca (Al Qur'an) saat ruku"
+        }
+      ]
+    },
+    "ur": {
+      "n": 400,
+      "n_full_valid_split": 2139,
+      "domain_counts_sampled": {
+        "hadith": 341,
+        "quran": 59
+      },
+      "bleu": 9.265358132639596,
+      "seconds": 3817.473624229431,
+      "by_domain": {
+        "hadith": {
+          "n": 341,
+          "bleu": 9.417514733168987
+        },
+        "quran": {
+          "n": 59,
+          "bleu": 6.109733063551145
+        }
+      },
+      "sample_translations": [
+        {
+          "ar": "حدثنا ابراهيم بن موسى، اخبرنا هشام، عن ابن جريج، قال اخبرني عبيد الله بن عمر، عن نافع يعني، عن ابن عمر، عن عمر بن الخطاب، رضى الله عنه قال كان فرض للمهاجرين الاولين اربعة الاف في اربعة، وفرض لابن عمر ثلاثة الاف وخمسمائة فقيل له هو من المهاجرين، فلم نقصته من اربعة الاف فقال انما هاجر به ابواه‏.‏ يقول ليس هو كمن هاجر بنفسه‏.‏",
+          "domain": "hadith",
+          "hyp": "ابراہیم بن موسیٰ نے ہمیں بتایا، ہشام نے ہمیں جریج کے بیٹے کے بارے میں بتایا، عبد اللہ بن عمر نے مجھے بتایا، نافع یعنی ابن عمر کے بارے میں عمر بن الخطاب، اللہ نے اس سے راضی ہو کر کہا کہ پہلے تارکین وطن کے لئے چار ہزار چار میں سے ایک فرض تھا، اور عمر کے بیٹے کے لئے تین ہزار پانچ سو اور ایک ہی مہاجر تھے، ان کی کمی چار ہزار تھی، انما نے اپنے والدین کے ساتھ ہجرت کی۔ وہ خود ہی ہجرت کرنے والے کی طرح نہیں ہے۔ ",
+          "ref": "ہم سے ابراہیم بن موسیٰ نے بیان کیا، کہا ہم کو ہشام نے خبر دی، ان سے ابن جریج نے بیان کیا، کہا کہ مجھے عبیداللہ بن عمر نے خبر دی، انہیں نافع نے یعنی ابن عمر رضی اللہ عنہما سے اور وہ عمر بن خطاب رضی اللہ عنہ سے، فرمایا آپ نے تمام مہاجرین اولین کا وظیفہ ( اپنے عہد خلافت میں ) چار چار ہزار چار چار قسطوں میں مقرر کر دیا تھا، لیکن عبداللہ بن عمر رضی اللہ عنہما کا وظیفہ چار قسطوں میں ساڑھے تین ہزار تھا اس پر ان سے پوچھا گیا کہ عبداللہ بن عمر رضی اللہ عنہما بھی مہاجرین میں سے ہیں۔ پھر آپ انہیں چار ہزار سے کم کیوں دیتے ہیں؟ تو عمر رضی اللہ عنہ نے کہا کہ انہیں ان کے والدین ہجرت کر کے یہاں لائے تھے۔ اس لیے وہ ان مہاجرین کے برابر نہیں ہو سکتے جنہوں نے خود ہجرت کی تھی۔"
+        },
+        {
+          "ar": "حدثنا هشام بن عمار، حدثنا اسماعيل بن عياش، حدثنا شرحبيل بن مسلم الخولاني، سمعت ابا امامة الباهلي، يقول سمعت رسول الله صلى الله عليه وسلم يقول في خطبته عام حجة الوداع ‏ \"‏ ان الله قد اعطى كل ذي حق حقه فلا وصية لوارث ‏\"‏ ‏.‏",
+          "domain": "hadith",
+          "hyp": "ہم سے هشام بن عمار، ہم سے اسماعیل بن عیاش، ہم سے شرحبیل بن مسلم الخولانی، ہم سے ابو امامہ البہلی، آپ صلی اللہ علیہ وسلم نے اپنے خطاب عام میں خدا حافظ کا بیان کرتے ہوئے کہا کہ اللہ تعالیٰ نے ہر حق دار کو اپنا حق دیا ہے، وارث کا کوئی وصیت نہیں ہے۔",
+          "ref": "ابوامامہ باہلی رضی اللہ عنہ کہتے ہیں کہ میں نے رسول اللہ صلی اللہ علیہ وسلم سے سنا، آپ حجۃ الوداع کے سال اپنے خطبہ میں فرما رہے تھے: اللہ تعالیٰ نے ( میت کے ترکہ میں ) ہر حقدار کو اس کا حق دے دیا ہے، لہٰذا کسی وارث کے لیے وصیت جائز نہیں ہے ۔"
+        },
+        {
+          "ar": "حدثنا محمد بن بشار، حدثنا الانصاري، حدثنا المسعودي، حدثنا عبد الرحمن بن القاسم بن محمد بن ابي بكر الصديق، عن ابيه، عن عائشة، ان رسول الله  صلى الله عليه وسلم  قال ‏\"‏ الحية فاسقة والعقرب فاسقة والفارة فاسقة والغراب فاسق ‏\"‏ ‏.‏ فقيل للقاسم ايؤكل الغراب قال من ياكله بعد قول رسول الله  صلى الله عليه وسلم  ‏\"‏ فاسق ‏\"‏ ‏.‏",
+          "domain": "hadith",
+          "hyp": "ہمیں محمد بن بشار، ہمارا نصرت پسند واقعہ، ہمارا مسعودی واقعہ، عبد الرحمن بن القاسم بن محمد بن ابی بکر صادق، اپنے والد، عائشہ کے بارے میں، رسول اللہ صلی اللہ علیہ وسلم نے فرمایا: \"فاسد حیا اور فاسد عقاب، فاسد فارا اور فاسد گاراب \"۔ فقیر قاسم نے کہا: \"اسے کھانے والے کو رسول اللہ صلی اللہ علیہ وسلم کے کہنے کے بعد فاسد \" کہا۔",
+          "ref": "ام المؤمنین عائشہ رضی اللہ عنہا کہتی ہیں کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا: سانپ فاسق ہے، بچھو فاسق ہے، چوہا فاسق ہے اور کوا فاسق ہے ۔ قاسم سے پوچھا گیا: کیا کوا کھایا جاتا ہے؟ کہا: رسول اللہ صلی اللہ علیہ وسلم کے فاسق کہنے کے بعد اسے کون کھائے گا؟۔"
+        },
+        {
+          "ar": "حدثنا ابو بكر بن ابي شيبة، وابو كريب - واللفظ لابي كريب - قالا حدثنا ابو معاوية، عن الاعمش، عن ابي صالح، عن جابر بن عبد الله، قال كنا مع رسول الله صلى الله عليه وسلم فاستسقى فقال رجل يا رسول الله الا نسقيك نبيذا فقال ‏\"‏ بلى ‏\"‏ ‏.‏ قال فخرج الرجل يسعى فجاء بقدح فيه نبيذ فقال رسول الله صلى الله عليه وسلم ‏\"‏ الا خمرته ولو تعرض عليه عودا ‏\"‏ ‏.‏ قال فشرب ‏.‏",
+          "domain": "hadith",
+          "hyp": "ابو بکر بن ابی شیبہ نے ہمیں بتایا، ابو کریب نے - اور لفظ لابی کریب - ہمیں ابو معاویہ نے، عظموں کے بارے میں، ابی صالح کے بارے میں، جابر بن عبداللہ کے بارے میں بتایا، انہوں نے کہا کہ ہم رسول اللہ کے ساتھ تھے، تو انہوں نے کہا کہ ہم آپ کو پانی پلائے، ایک شخص یا رسول اللہ نے کہا کہ ہم آپ کو پانی پلائے، آپ نے کہا کہ ہاں، اس شخص نے کہا کہ وہ شراب پینے کے لئے آیا ہے، رسول اللہ نے کہا کہ آپ کو شراب مل جائے تو آپ کو شراب مل جائے۔",
+          "ref": "ابو معاویہ نے اعمش سے ، انھوں نے ابو صالح سے ، انھوں نے حضرت جابر بن عبداللہ رضی اللہ تعالیٰ عنہ سے روایت کی ، کہا : ہم رسول اللہ صلی اللہ علیہ وسلم کے ساتھ تھے کہ آپ نے پانی مانگا ، ایک شخص نے کہا : اے اللہ کے رسول صلی اللہ علیہ وسلم !ہم آپ صلی اللہ علیہ وسلم کو نبیذ نہ پلائیں؟آپ صلی اللہ علیہ وسلم نے فرمایا : \" کیوں نہیں! \" پھر وہ شخص دوڑتا ہوا گیا اور ایک پیالے میں نبیذ لے کر آیا ، رسول اللہ صلی اللہ علیہ وسلم نے فرمایا ، رسول اللہ صلی اللہ علیہ وسلم نے فرمایا؛ \" تم نے اسے ڈھانک کر کیوں نہیں دیا؟چاہے تم اس کے اوپر چوڑائی کے رخ ایک لکڑی ( ہی ) رکھ دیتے ۔ \" ( حضرت جابر رضی اللہ تعالیٰ عنہ نے ) کہا : پھر آپ صلی اللہ علیہ وسلم نے نوش فرمایا ۔"
+        },
+        {
+          "ar": "اخبرنا عمرو بن علي، قال حدثنا عبد الرحمن، قال حدثنا حماد بن سلمة، عن حميد، عن انس، قال قال رسول الله صلى الله عليه وسلم ‏ \"‏ جاهدوا بايديكم والسنتكم واموالكم ‏\"‏ ‏.‏",
+          "domain": "hadith",
+          "hyp": "عمرو بن علی نے کہا کہ ہم سے عبد الرحمن نے کہا کہ ہم سے حماد بن سلمہ نے کہا کہ حمید نے کہا کہ انس نے کہا کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا کہ اپنی جان اور اپنی جان اور اپنی دولت سے جدوجہد کرو۔",
+          "ref": "انس رضی الله عنہ کہتے ہیں کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا: ”جہاد کرو اپنے ہاتھوں سے، اپنی زبانوں سے، اور اپنے مالوں کے ذریعہ“ ۱؎۔"
+        },
+        {
+          "ar": "حدثني ابو كامل الجحدري، فضيل بن حسين حدثنا ابو عوانة، عن زياد بن علاقة، عن قطبة بن مالك، قال صليت وصلى بنا رسول الله صلى الله عليه وسلم فقرا ‏{‏ ق والقران المجيد‏}‏ حتى قرا ‏{‏ والنخل باسقات‏}‏ قال فجعلت ارددها ولا ادري ما قال ‏.‏",
+          "domain": "hadith",
+          "hyp": "ابو کامل الجہری، فضیل بن حسین نے ابو عوانہ سے زید بن رشتہ، قطب بن مالک سے متعلق مجھے بتایا، انہوں نے کہا کہ نماز اور نماز ہمارے رسول اللہ صلى الله عليه وسلم کے لئے فقراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً اور نصاراً",
+          "ref": "ابو عوانہ نے زیاد بن علاقہ سے اور انہوں نے حضرت قطبہ نے مالک ‌رضی ‌اللہ ‌عنہ ‌ ‌ سے روایت کی ، انہوں نے کہا : میں نے نماز پڑھی اور ہمیں رسول اللہﷺ نے نماز پڑھائی ، آپ ﴿ق والقرآن المجيد﴾ پڑھی حتی کہ آپ نے ﴿والنخل باسقت﴾ ( اور کجھور کے بلند وبالا درخت ) پڑھا تو میں اس آیت کو بار بار ( ذہن میں ) دہرانے لگا اور آپ نے جو کہا مجھے اس ( کے مفہوم ) کا پتہ نہ چلا ۔"
+        },
+        {
+          "ar": "حدثنا عبد الله بن يزيد، قال حدثنا سعيد بن ابي ايوب، قال حدثني يزيد بن ابي حبيب، قال سمعت مرثد بن عبد الله اليزني، قال اتيت عقبة بن عامر الجهني فقلت الا اعجبك من ابي تميم يركع ركعتين قبل صلاة المغرب‏.‏ فقال عقبة انا كنا نفعله على عهد رسول الله صلى الله عليه وسلم‏.‏ قلت فما يمنعك الان قال الشغل‏.‏",
+          "domain": "hadith",
+          "hyp": "عبداللہ بن یزید نے کہا کہ ہم نے سید بن ابی ایوب کو دیکھا ، انہوں نے کہا کہ مجھے خبر ہے کہ یزید بن ابی حبیب نے کہا کہ میں مرثد بن عبداللہ الیزنی کو سنا ہوں ، انہوں نے کہا کہ اتیت عقبہ بن عامر الجهانی نے کہا کہ کیا آپ کو میرے ابو تمیم کی طرح لگتا ہے جو مغربی نماز سے پہلے دو گھٹنوں پر گھٹنے ٹیک کر نماز ادا کرتا ہے ؟ انہوں نے کہا کہ عقبہ میں نے رسول اللہ صلی اللہ علیہ وسلم کے عہد پر کیا تھا ۔ میں نے کہا کہ اب آپ کو کیا نہیں کرنا چاہیے کہا کہ کام . ",
+          "ref": "ہم سے عبداللہ بن یزید نے بیان کیا، کہا کہ ہم سے سعید بن ابی ایوب نے بیان کیا، کہا کہ مجھ سے یزید بن ابی حبیب نے بیان کیا، انہوں نے کہا کہ میں نے مرثد بن عبداللہ یزنی سے سنا کہ میں عقبہ بن عامر جہنی صحابی رضی اللہ عنہ کے پاس آیا اور عرض کیا آپ کو ابوتمیم عبداللہ بن مالک پر تعجب نہیں آیا کہ وہ مغرب کی نماز فرض سے پہلے دو رکعت نفل پڑھتے ہیں۔ اس پر عقبہ نے فرمایا کہ ہم بھی رسول اللہ صلی اللہ علیہ وسلم کے زمانہ میں اسے پڑھتے تھے۔ میں نے کہا پھر اب اس کے چھوڑنے کی کیا وجہ ہے؟ انہوں نے فرمایا کہ دنیا کے کاروبار مانع ہیں۔"
+        },
+        {
+          "ar": "حدثنا احمد بن محمد بن حنبل، حدثنا اسماعيل، حدثنا ايوب، عن سعيد بن جبير، قال قلت لابن عمر رجل قذف امراته ‏.‏ قال فرق رسول الله صلى الله عليه وسلم بين اخوى بني العجلان وقال ‏ \"‏ الله يعلم ان احدكما كاذب ‏.‏ فهل منكما تائب ‏\"‏ ‏.‏ يرددها ثلاث مرات فابيا ففرق بينهما ‏.‏",
+          "domain": "hadith",
+          "hyp": "احمد بن محمد بن حنبل نے ہمیں بتایا، اسماعیل نے ہمیں بتایا، ایوب نے ہمیں بتایا، سعید بن جبیر نے کہا، \"میں نے کہا کہ ابن عمر ایک آدمی تھا جو اپنے احکامات کو توڑتا تھا۔\" نبی اکرم صلی اللہ علیہ وسلم نے بنی العجلان کے بھائیوں میں فرق کیا اور کہا، \"اللہ جانتا ہے کہ تم میں سے کوئی جھوٹا ہے۔ کیا تم میں سے کوئی توبہ کر چکا ہے؟\" فابیہ نے تین بار اس کا جواب دیا اور ان میں فرق کیا۔ ",
+          "ref": "سعید بن جبیر کہتے ہیں کہ میں نے ابن عمر رضی اللہ عنہما سے جو کہا کہ ایک شخص اپنی عورت کو تہمت لگائے تو اس کا کیا حکم ہے؟ تو انہوں نے کہا: رسول اللہ صلی اللہ علیہ وسلم نے بنو عجلان کے دونوں بھائی بہنوں ۱؎ کو ( اس صورت میں ) جدا کرا دیا تھا اور فرمایا تھا: اللہ تعالیٰ جانتا ہے کہ تم میں ایک ضرور جھوٹا ہے، تو کیا تم دونوں میں کوئی توبہ کرنے والا ہے؟ آپ صلی اللہ علیہ وسلم نے ان الفاظ کو تین بار دہرایا لیکن ان دونوں نے انکار کیا تو آپ نے ان کے درمیان علیحدگی کرا دی۔"
+        },
+        {
+          "ar": "واذا تتلى عليهم ءايتنا قالوا قد سمعنا لو نشاء لقلنا مثل هذا ان هذا الا اسطير ٱلاولين",
+          "domain": "quran",
+          "hyp": "اور اگر آپ ان کے سامنے یہ پڑھتے ہیں تو وہ کہتے ہیں کہ ہم نے سنا ہے اگر ہم چاہیں تو ہم اس طرح کہہ سکتے ہیں کہ یہ صرف پہلا افسانہ ہے۔",
+          "ref": "اور جب ان کے سامنے ہماری آیتوں کی تلاوت کی جاتی ہے تو یہ کہتے ہیں کہ : (بس) ہم نے سن لیا، اگر ہم چاہیں تو اس جیسی باتیں ہم بھی کہہ لائیں۔ یہ (قرآن) اور کچھ نہیں، صرف پچھلے لوگوں کے افسانے ہیں۔"
+        },
+        {
+          "ar": "وما يغني عنه ماله اذا تردى",
+          "domain": "quran",
+          "hyp": "اور اگر وہ واپس آجائے تو اس کے پاس پیسہ بھی نہیں ہے۔",
+          "ref": "اور جب ایسا شخص تباہی کے گڑھے میں گرے گا تو اس کا مال اس کے کچھ کام نہیں آئے گا۔"
+        }
+      ]
+    },
+    "tr": {
+      "n": 400,
+      "n_full_valid_split": 2218,
+      "domain_counts_sampled": {
+        "hadith": 288,
+        "quran": 112
+      },
+      "bleu": 1.0155667031863431,
+      "seconds": 3467.4098014831543,
+      "by_domain": {
+        "hadith": {
+          "n": 288,
+          "bleu": 0.8824563185773882
+        },
+        "quran": {
+          "n": 112,
+          "bleu": 3.2755852661463196
+        }
+      },
+      "sample_translations": [
+        {
+          "ar": "حدثنا عبيد الله بن عمر بن ميسرة، حدثنا عبد العزيز، - يعني ابن محمد - اخبرني يزيد بن عبد الله بن الهاد، عن محمد بن ابراهيم، عن بسر بن سعيد، عن ابي قيس، مولى عمرو بن العاص عن عمرو بن العاص، قال قال رسول الله صلى الله عليه وسلم ‏ \"‏ اذا حكم الحاكم فاجتهد فاصاب فله اجران واذا حكم فاجتهد فاخطا فله اجر ‏\"‏ ‏.‏ فحدثت به ابا بكر بن حزم فقال هكذا حدثني ابو سلمة عن ابي هريرة ‏.‏",
+          "domain": "hadith",
+          "hyp": "Bize Abdüllah bin Ömer ibn Misra, Abdül-Eziz, yani Muhammed'in oğlu, Muhammed bin Hâd, Muhammed bin İbrahim, Sezar bin Seyd, Abi Qis, Mûli Ömer bin Ays, Peygamber (s.a.v.) şöyle dedi: \"Hükümdar hükümdarı Fâzât'a karşı bir ceza verir, hükümdarı Fâzât'a karşı bir ödül verir\".",
+          "ref": "Amr b. Âs; Rasûlullah (s.a.v.)'in şöyle buyurduğunu rivayet etti: \"Hâkim hüküm verir(ken) ictihad eder de (içtihadında) isabet ederse, kendisine (bu içtihadından dolayı) iki sevap vardır. Eğer hâkim hüküm verir(ken) ictihad eder de (içtihadında) yanılırsa kendisine (bu içtihadından dolayı) bir sevap vardır.\" (Ravi Yezid b. Abdülah b. el-Hâd dedi ki:) Ben bu hadisi Ebû Bekir b. Hazm'e haber verdim de; \"(Bunu bana) Ebû Seleme de Ebû Hureyre'den aynen böyle nakletmişti\" cevabını verdi"
+        },
+        {
+          "ar": "حدثنا عبد الله بن عبد الرحمن الدارمي، اخبرنا ابو اليمان، اخبرنا شعيب، عن الزهري، قال اخبرني سعيد بن المسيب، وعطاء بن يزيد الليثي، ان ابا هريرة، اخبرهما ان الناس قالوا للنبي صلى الله عليه وسلم يا رسول الله هل نرى ربنا يوم القيامة وساق الحديث بمثل معنى حديث ابراهيم بن سعد ‏.‏",
+          "domain": "hadith",
+          "hyp": "Bize Abdullah bin Abdülrahman Al-Darmî, bize Abu Yılmaz, bize Şeib, Zahri'yi anlat, dedi, bana Söyledikleri Said bin Messeep, İtâta bin Yezid Leythi, baba Harîra, onlara söyle, insanlar peygambere veya Allah'ın elçisine, İbrahim bin Sa'd'in sözlerinin anlamında Rabbini kıyamet günü ve konuşmaların başını görecek miyiz, dediler.",
+          "ref": "Bize Abdullah b. Abdirrahman ed-Dârimî rivayet etti. (Dedi ki): Bize Ebu'l-Yemân haber verdi. (Dedi ki): Bize Şuayb, Zührî'den naklen haber verdi demiş ki; bana Sa'id b. el-Müseyyeb ile Âtâ' b. Yezid el-Leysî haber verdiler onlarada Ebu Hureyre haber vermiş ki: Bazı kimseler Nebi (Sallallahu aleyhi ve Sellem)'e: Ey Allah'ın Resulü kıyamet gününde Rabbimizi görecek miyiz, dediler. Sonra bu hadisi (Yakub'un babası) İbrahim b. Sa'd'ın hadisi ile aynı manada rivayet etti. Diğer tahric: Buhari, 806 -uzunca-, 6573 -uzunca-; Tuhfetu'l-Eşraf"
+        },
+        {
+          "ar": "عن انس رضي الله عنه : ان النبي صلى الله عليه وسلم استخلف ابن ام مكتوم يؤم الناس وهو اعمى.",
+          "domain": "hadith",
+          "hyp": "İnsan Rızası Hakkında: Peygamberin oğlu İmta'm, insanları inanırken kör olduğunu söylüyor.",
+          "ref": "Enes -radıyallahu anh-'tan rivayet edildiğine göre o şöyle demiştir: Nebi -sallallahu aleyhi ve sellem- âmâ olan İbn Ümmü Mektûm -radıyallahu anh-'ı kendisi yerine insanlara imam olması için bıraktı."
+        },
+        {
+          "ar": "وحدثنا محمد بن المثنى، وابن، بشار قالا حدثنا محمد بن جعفر، حدثنا شعبة، عن عمرو بن مرة، عن سالم بن ابي الجعد، قال سالت جابر بن عبد الله عن اصحاب، الشجرة فقال لو كنا مائة الف لكفانا كنا الفا وخمسمائة ‏.‏",
+          "domain": "hadith",
+          "hyp": "Muhammed bin Mehni, Vaban, Basar, Kalah, Muhammed bin Jafer, Şebha, Ömru bin Kar, Salem bin Abi Al-Gâd, Salt Jabr bin Abdullah, Sahibleri, Ağaç dedi ki: \"Eğer yüz bin bin Kavana olsaydık, beş yüz Alfa olurduk\".",
+          "ref": "Bize Muhammed b. Eî-Müsennâ ile İbni Beşşâr da rivayet ettiler. (Dedilerki): Bize Muhammed b. Ca'fer rivayet etti. (Dediki): Bize Şu'be, Amr b. Murra'dan, o da Salim b. Ebi'l-Ca'd'dan naklen rivayet etti. Şöyle demiş : Câbir b. Abdillâh'a ağaç ashabını sordum da: Yüz bin kişi olsak yine bize yeterdi. Biz bin beş yüz kişi idik; cevâbını verdi"
+        },
+        {
+          "ar": "ولما جهزهم بجهازهم قال ٱيتوني باخ لكم من ابيكم الا ترون اني اوفي ٱلكيل وانا خير ٱلمنزلين",
+          "domain": "quran",
+          "hyp": "Onlar da cihazlarını hazırladıklarında, \"Ababınızdan size haber vermeyeceğim, görmüyor musunuz ki ben de ev sahibiyim.",
+          "ref": "(Yusuf) onların yüklerini hazırlayınca dedi ki: \"Sizin bababir kardeşinizi de bana getirin. Görmüyor musunuz, ben ölçeği tam dolduruyorum ve ben misafirperverlerin en iyisiyim"
+        },
+        {
+          "ar": "واذا تتلى عليهم ءايتنا قالوا قد سمعنا لو نشاء لقلنا مثل هذا ان هذا الا اسطير ٱلاولين",
+          "domain": "quran",
+          "hyp": "Onlara \"Ey\" diye okuduğunda, \"İşittik\" derler, \"İsteseydik\" diyebilirdik.",
+          "ref": "Ayetlerimiz onlara okunduğu zaman, \"İşittik, işittik! İstesek biz de aynını söyleyebiliriz; bu sadece eskilerin masallarıdır\" derlerdi"
+        },
+        {
+          "ar": "فالقى موسى عصاه فاذا هي تلقف ما يافكون",
+          "domain": "quran",
+          "hyp": "Musa'nın değneğini atıp atması, onların yaptıklarının bir sonucu oldu.",
+          "ref": "Bunun üzerine Musa değneğini attı; onların uydurduklarını yutmağa başlayıverdi"
+        },
+        {
+          "ar": "ولقد كذب ٱلذين من قبلهم فكيف كان نكير",
+          "domain": "quran",
+          "hyp": "Ve onlardan önce de yalan söyledi.",
+          "ref": "And olsun ki, bunlardan öncekiler de yalanlamışlardı. Beni inkar etmek nasılmış"
+        },
+        {
+          "ar": "حدثنا اسحاق، قال حدثنا يعقوب بن ابراهيم، قال حدثنا ابن اخي ابن شهاب، عن عمه، قال اخبرني حميد بن عبد الرحمن بن عوف، ان ابا هريرة، قال بعثني ابو بكر في تلك الحجة في مؤذنين يوم النحر نؤذن بمنى ان لا يحج بعد العام مشرك، ولا يطوف بالبيت عريان‏.‏ قال حميد بن عبد الرحمن ثم اردف رسول الله صلى الله عليه وسلم عليا، فامره ان يؤذن ببراءة قال ابو هريرة فاذن معنا علي في اهل منى يوم النحر لا يحج بعد العام مشرك، ولا يطوف بالبيت عريان‏.‏",
+          "domain": "hadith",
+          "hyp": "Bize İshak'ı anlatın, dedi İbrahim oğlu Yakub, dedi Şaabe oğlu oğlu, amcası hakkında, dedi, \"Böyle söyleyin, dedi Hamid ibn Abdülrehman ibn Uff, Anba Harira, dedi, \"Bu bahaneye elçi olarak Abu Bakr'ı gönderdiğimizi bildirmek için, Muharram günü müjdelerimizin ardından Hacılık yapmaya, Aryan eve'ne gitmeye izin vermeyelim\". dedi.",
+          "ref": "Ebu Hureyre'den şöyle nakledilmiştir: \"Ebu Bekir, o yılki hacda Kurban Bayramı günü Mina'da insanlara: 'Bu yıl'dan sonra hiçbir müşrik hac edemeyecek, hiçbir çıplak da Kabe'yi tavaf edemeyecek' şeklinde duyuru yapan tellallar'la birlikte beni de gönderdi. Humeyd İbn Abdurrahman dedi ki: Daha sonra Allah Rasulü (Sallallahu aleyhi ve Sellem), Ali (r.a.)'i göndererek ona Tevbe suresini insanlara okumasını emretti. Ebu Hureyre (r.a.) olayı anlatmaya şu şekilde devam etti: Bizimle birlikte Ali, bayramın birinci günü Mina'da bulunanlara: 'Bu yıl'dan sonra hiçbir müşrik hac edemeyecek, hiçbir çıplak da Kabe'yi tavaf edemeyecek' şeklinde duyuru yaptı. Tekrar:"
+        },
+        {
+          "ar": "وحدثني يحيى بن حبيب الحارثي، حدثنا خالد، - وهو ابن الحارث - حدثنا شعبة، اخبرنا عبيد الله بن ابي بكر، عن انس، عن النبي صلى الله عليه وسلم في الكبائر قال ‏ \"‏ الشرك بالله وعقوق الوالدين وقتل النفس وقول الزور ‏\"‏ ‏.‏",
+          "domain": "hadith",
+          "hyp": "Bana Yahya ibn Habib Harati, bize Kahlûd, - ki Harati'nin oğlu - bize Şebâ'yı anlattı, bize İbn Abi Bekr'in, İns'in, Peygamber'in büyüklerde söylediği \" Allah'a ortak koşmak, ana babaların hakları, intihar ve yalan söylemesi \" hakkında konuştu.",
+          "ref": "Bana Yahya b. Habib el-Hârisi rivayet etti. (Dediki): Bize Hâlid —ki İbnü'l Haîris'dir— rivayet elti. (Dediki): Bize Şu'be rivayet etti. (Dediki): Bize Ubeydullah b..Ebi Bekir, Enes'den, o da Nebi (Sallallahu aleyhi ve Sellem)'den büyük günahlar hakkında şöyle buyurduğunu nakletti: \"Allah'a ortak koşmak, anne babaya itaatsizlik etmek, canı öldürmek ve yalan söylemek. \" Diğer tahric: Buhari, 2510, 5632, 6477; Tirmizi, 1207,3018; Nesai, 4021; Tuhfetu'l-Eşraf"
+        }
+      ]
+    }
+  }
+}
