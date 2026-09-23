@@ -1,4 +1,5 @@
-# Generated data -- reproducible via `make phase1`, too large for git.
+# Generated data -- reproducible via `make phase1` (train_ready.jsonl also needs
+# `make prepare-for-training`), too large for git.
 data/raw/fawazahmed0_quran/
 data/raw/fawazahmed0_hadith/
 data/raw/hadeethenc/
